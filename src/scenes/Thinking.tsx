@@ -21,7 +21,7 @@ export function Thinking() {
   const { t } = useLanguage();
   const reduced = useReducedMotion();
   const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
-  const { index: pathIndex, select } = useScrollSteps(progress, t.thinking.paths.length);
+  const { index: pathIndex, select } = useScrollSteps(reduced ? 0 : progress, t.thinking.paths.length);
   const carouselRef = useCenteredSelection<HTMLUListElement>(pathIndex);
   const path = t.thinking.paths[pathIndex]!;
   const activeIds = new Set(path.nodes);

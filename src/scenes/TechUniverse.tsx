@@ -25,11 +25,11 @@ export function TechUniverse() {
             <p className="story-copy mt-4">{t.tech.copy}</p>
           </header>
 
-          <div ref={tabsRef} className="tech-tabs mt-6" role="tablist" aria-label={t.tech.title}>
+          <div ref={tabsRef} className="tech-tabs mt-6" role="group" aria-label={t.tech.title}>
             {t.tech.clusters.map((item, index) => {
               const id = item.id as ClusterId;
               const isActive = index === clusterIndex;
-              return <button key={item.id} type="button" role="tab" aria-selected={isActive} onClick={() => select(index)} className={`tech-tab ${isActive ? "is-active" : ""}`} style={isActive ? { borderColor: clusterAccent[id], color: clusterAccent[id] } : undefined}>{item.name}</button>;
+              return <button key={item.id} type="button" aria-pressed={isActive} onClick={() => select(index)} className={`tech-tab ${isActive ? "is-active" : ""}`} style={isActive ? { borderColor: clusterAccent[id], color: clusterAccent[id] } : undefined}>{item.name}</button>;
             })}
           </div>
 

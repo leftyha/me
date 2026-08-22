@@ -1,6 +1,6 @@
 export const en = {
   meta: { title: "Leonardo Mora — I turn complex problems into working systems", description: "Interactive professional experience of Leonardo Mora, Software Engineer, Backend & Full-Stack Engineer, Product Builder and Systems Thinker with 7+ years building production systems, integrations and payments." },
-  nav: { journey: "Journey", experience: "Experience", lab: "Services", about: "About", cta: "Let's connect", langLabel: "Language", menu: "Open navigation" },
+  nav: { journey: "Journey", experience: "Experience", lab: "Services", about: "About", cta: "Let's connect", langLabel: "Language", menu: "Primary navigation", skip: "Skip to content" },
   stations: ["Start", "How I decide", "How I build", "Experience", "Technology", "Services", "Impact", "Profile", "Contact"],
   arrival: {
     name: "Leonardo Mora", roles: "Software Engineer · Product Builder · Systems Thinker", headline: "I turn complex problems into working systems.", support: "7+ years in backend, integrations, payments and production products.", ctaPrimary: "Explore my work", ctaSecondary: "Contact", engineTitle: "Solution engine", inputLabel: "Problem", processLabel: "Judgment", outputLabel: "System", engineProgressLabel: "Problem → judgment → system",
@@ -22,7 +22,7 @@ export const en = {
     ],
   },
   experience: {
-    kicker: "Professional experience", title: "Real problems, not desktop exercises", copy: "Banking, telecommunications, education and hospitality. Software with users, payments and real operations.", jobsLabel: "Experience by company", present: "Present",
+    kicker: "Professional experience", title: "Real problems, not desktop exercises", copy: "Banking, telecommunications, education and hospitality. Software with users, payments and real operations.", jobsLabel: "Experience by company",
     jobs: [
       { id: "clai", company: "CLAI Payments · Banesco project", period: "2026 — present", role: "Software Engineer", place: "Remote", note: "Evolution of banking modules for cards, fees, issuance, replacement and profiles. Transaction-rule analysis, traceability, testing and incident resolution on critical systems.", impact: ["Safe changes on IBM i without stopping operations", "Bridging RPGLE/SQL business logic with Vue interfaces"], tags: ["IBM i", "AS400", "RPGLE", "SQL", "Vue 2", "Payments"] },
       { id: "antica", company: "Antica", period: "Oct 2021 — Jun 2025", role: "Software Development Engineer", place: "Remote · Chile", note: "Telecommunications backend with decoupled services, REST APIs, WebSockets and automation deployed on AWS.", impact: ["Python and Node.js services for operational processes", "Docker and CI/CD for reproducible delivery"], tags: ["Python", "Flask", "FastAPI", "Node.js", "AWS", "Docker"] },
@@ -56,7 +56,7 @@ export const en = {
     ],
     facts: ["7+ years of professional experience", "Backend & full-stack engineering", "Financial systems and payments", "Enterprise integrations in production", "Products built from zero", "Comfortable between legacy and modern stacks"],
   },
-  profileSection: { kicker: "Professional profile", role: "Software Engineer · Backend & Full-Stack", location: "Caracas, Venezuela · Available remotely", title: "Backend, product and production systems", highlights: ["7+ years across telecommunications, education, hospitality and banking", "Python, Node.js, React, Next.js and Vue", "Payments, APIs and enterprise integrations", "AWS, Docker, CI/CD and production operations"], educationLabel: "Education", education: "Associate Degree in Computer Science · I.U.T. Antonio José de Sucre", languagesLabel: "Languages", languages: "Native Spanish · Technical English" },
+  profileSection: { kicker: "Professional profile", role: "Software Engineer · Backend & Full-Stack", location: "Caracas, Venezuela · Available remotely", title: "Backend, product and production systems", highlights: ["7+ years across telecommunications, education, hospitality and banking", "Python, Node.js, React, Next.js and Vue", "Payments, APIs and enterprise integrations", "AWS, Docker, CI/CD and production operations"], educationLabel: "Education", education: "Associate Degree in Computer Science · Telecommunications Engineering in progress", languagesLabel: "Languages", languages: "Native Spanish · Technical English" },
   contact: { kicker: "Contact", title: "What do you need", titleAccent: "to solve?", cta: "Email me", availability: "Available for remote roles and projects." },
 };
 

@@ -12,7 +12,7 @@ export const profile = {
   siteUrl: "https://leftyha.github.io/me/",
   links: [
     { id: "email", label: "Email", href: "mailto:leonardo.ced916@gmail.com" },
-    { id: "github", label: "GitHub", href: "https://github.com/lefhiro-s" },
+    { id: "github", label: "GitHub", href: "https://github.com/leftyha" },
     { id: "linkedin", label: "LinkedIn", href: "https://linkedin.com/in/leonardo-david-mora-cede%C3%B1o-36602a155" },
   ] as ProfileLink[],
 };

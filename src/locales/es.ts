@@ -2,7 +2,7 @@ import type { Dictionary } from "./en";
 
 export const es: Dictionary = {
   meta: { title: "Leonardo Mora — Convierto problemas complejos en sistemas que funcionan", description: "Experiencia profesional interactiva de Leonardo Mora, Software Engineer, Backend y Full-Stack Engineer, Product Builder y Systems Thinker con más de 7 años construyendo sistemas en producción, integraciones y pagos." },
-  nav: { journey: "Recorrido", experience: "Experiencia", lab: "Servicios", about: "Sobre mí", cta: "Hablemos", langLabel: "Idioma", menu: "Abrir navegación" },
+  nav: { journey: "Recorrido", experience: "Experiencia", lab: "Servicios", about: "Sobre mí", cta: "Hablemos", langLabel: "Idioma", menu: "Navegación principal", skip: "Saltar al contenido" },
   stations: ["Inicio", "Cómo decido", "Cómo construyo", "Experiencia", "Tecnología", "Servicios", "Impacto", "Perfil", "Contacto"],
   arrival: {
     name: "Leonardo Mora", roles: "Software Engineer · Product Builder · Systems Thinker", headline: "Convierto problemas complejos en sistemas que funcionan.", support: "Más de 7 años en backend, integraciones, pagos y productos en producción.", ctaPrimary: "Explorar mi trabajo", ctaSecondary: "Contacto", engineTitle: "Motor de soluciones", inputLabel: "Problema", processLabel: "Criterio", outputLabel: "Sistema", engineProgressLabel: "Problema → criterio → sistema",
@@ -24,7 +24,7 @@ export const es: Dictionary = {
     ],
   },
   experience: {
-    kicker: "Experiencia profesional", title: "Problemas reales, no proyectos de escritorio", copy: "Banca, telecomunicaciones, educación y hotelería. Software con usuarios, pagos y operación real.", jobsLabel: "Experiencia por empresa", present: "Actual",
+    kicker: "Experiencia profesional", title: "Problemas reales, no proyectos de escritorio", copy: "Banca, telecomunicaciones, educación y hotelería. Software con usuarios, pagos y operación real.", jobsLabel: "Experiencia por empresa",
     jobs: [
       { id: "clai", company: "CLAI Payments · proyecto Banesco", period: "2026 — actualidad", role: "Software Engineer", place: "Remoto", note: "Evolución de módulos bancarios de tarjetas, cargos, emisión, reposición y perfiles. Análisis de reglas transaccionales, trazabilidad, pruebas y resolución de incidencias sobre sistemas críticos.", impact: ["Cambios seguros sobre IBM i sin detener la operación", "Conexión entre lógica RPGLE/SQL e interfaces Vue"], tags: ["IBM i", "AS400", "RPGLE", "SQL", "Vue 2", "Pagos"] },
       { id: "antica", company: "Antica", period: "oct. 2021 — jun. 2025", role: "Software Development Engineer", place: "Remoto · Chile", note: "Backend para telecomunicaciones con servicios desacoplados, APIs REST, WebSockets y automatización desplegada en AWS.", impact: ["Servicios Python y Node.js para procesos operativos", "Docker y CI/CD para entregas reproducibles"], tags: ["Python", "Flask", "FastAPI", "Node.js", "AWS", "Docker"] },
@@ -58,6 +58,6 @@ export const es: Dictionary = {
     ],
     facts: ["Más de 7 años de experiencia profesional", "Ingeniería backend y full-stack", "Sistemas financieros y pagos", "Integraciones empresariales en producción", "Productos construidos desde cero", "Cómodo entre legacy y tecnologías modernas"],
   },
-  profileSection: { kicker: "Perfil profesional", role: "Software Engineer · Backend & Full-Stack", location: "Caracas, Venezuela · Disponible remoto", title: "Backend, producto y sistemas en producción", highlights: ["Más de 7 años en telecomunicaciones, educación, hotelería y banca", "Python, Node.js, React, Next.js y Vue", "Pagos, APIs e integraciones empresariales", "AWS, Docker, CI/CD y operación en producción"], educationLabel: "Educación", education: "T.S.U. en Informática · I.U.T. Antonio José de Sucre", languagesLabel: "Idiomas", languages: "Español nativo · Inglés técnico" },
+  profileSection: { kicker: "Perfil profesional", role: "Software Engineer · Backend & Full-Stack", location: "Caracas, Venezuela · Disponible remoto", title: "Backend, producto y sistemas en producción", highlights: ["Más de 7 años en telecomunicaciones, educación, hotelería y banca", "Python, Node.js, React, Next.js y Vue", "Pagos, APIs e integraciones empresariales", "AWS, Docker, CI/CD y operación en producción"], educationLabel: "Educación", education: "T.S.U. en Informática · Ingeniería de Telecomunicaciones en curso", languagesLabel: "Idiomas", languages: "Español nativo · Inglés técnico" },
   contact: { kicker: "Contacto", title: "¿Qué necesitas", titleAccent: "resolver?", cta: "Escribirme por email", availability: "Disponible para roles remotos y proyectos." },
 };

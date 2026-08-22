@@ -22,6 +22,7 @@ export function Header() {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${condensed ? "py-2" : "py-4"}`}>
+      <a href="#main-content" className="skip-link">{t.nav.skip}</a>
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4">
         <a href="#arrival" className={`flex items-center gap-2 rounded-full px-3 py-2 font-display text-sm font-semibold tracking-tight transition-all duration-500 ${condensed ? "glass" : ""}`}>
           <span aria-hidden="true" className="grid h-7 w-7 place-items-center rounded-lg text-[0.7rem] font-bold text-primary-foreground" style={{ background: "var(--gradient-ink)" }}>{profile.shortName}</span>

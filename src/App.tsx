@@ -16,7 +16,7 @@ export function App() {
     <LanguageProvider>
       <Header />
       <StationRail />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Arrival />
         <Thinking />
         <Transformation />

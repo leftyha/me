@@ -93,6 +93,9 @@
   :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
 }
 
+.skip-link { position: fixed; z-index: 100; top: 0.75rem; left: 0.75rem; transform: translateY(-160%); border-radius: 999px; background: var(--ink); padding: 0.7rem 1rem; color: var(--surface); font-size: 0.85rem; font-weight: 700; transition: transform 180ms ease; }
+.skip-link:focus { transform: translateY(0); }
+
 @utility panel {
   background: linear-gradient(145deg, color-mix(in oklab, var(--card) 94%, var(--teal)), var(--card));
   border: 1px solid var(--line);
@@ -202,10 +205,16 @@
 .impact-card.is-active { transform: translateY(-0.45rem); opacity: 1; animation: impact-in 540ms ease both; }
 .impact-card.is-active .impact-arrow { animation: impact-arrow 650ms ease both; }
 
-.profile-section { position: relative; padding-block: clamp(6rem, 13vh, 10rem); border-bottom: 1px solid var(--line); background: color-mix(in oklab, var(--surface-secondary) 45%, var(--surface)); }
+.profile-section { position: relative; scroll-margin-top: 4.5rem; padding-block: clamp(6rem, 13vh, 10rem); border-bottom: 1px solid var(--line); background: color-mix(in oklab, var(--surface-secondary) 45%, var(--surface)); }
 .profile-signature { background-image: radial-gradient(circle at 78% 14%, rgb(244 163 64 / 0.14), transparent 42%); }
-.contact-section { position: relative; padding-block: clamp(6rem, 13vh, 10rem); background-image: var(--gradient-daylight); }
-.contact-panel { min-height: 34rem; }
+.profile-photo-frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--secondary); }
+.profile-photo-frame::after { position: absolute; inset: auto 0 0; height: 22%; background: linear-gradient(0deg, rgb(8 17 27 / 0.5), transparent); content: ""; pointer-events: none; }
+.profile-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; transition: transform 700ms cubic-bezier(.22,.8,.3,1); }
+.profile-signature:hover .profile-photo { transform: scale(1.018); }
+.profile-identity { margin-top: auto; }
+.profile-identity .kicker { margin-bottom: 0.8rem; }
+.contact-section { position: relative; scroll-margin-top: 4.5rem; padding-block: clamp(6rem, 13vh, 10rem); background-image: var(--gradient-daylight); }
+.contact-panel { min-height: 28rem; }
 .contact-glow { position: absolute; right: -8rem; top: -9rem; width: 32rem; aspect-ratio: 1; border-radius: 999px; background: radial-gradient(circle, rgb(80 183 170 / 0.16), transparent 68%); }
 
 @keyframes mind-route-in { from { opacity: 0; transform: scale(0.9) rotate(-2deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
@@ -328,6 +337,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .scroll-story { height: auto; }
+  .scroll-story-stage { position: relative; height: auto; min-height: 100svh; overflow: visible; }
+  .story-meter { display: none; }
+  .method-step, .method-step:not(.is-active) { display: block; transform: none; opacity: 1; }
   .lm-flow, .lm-orbit, .lm-drift { animation: none !important; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }

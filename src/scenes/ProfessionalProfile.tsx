@@ -7,15 +7,24 @@ export function ProfessionalProfile() {
   return (
     <section id="profile" className="profile-section">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch">
-        <div className="profile-signature panel flex min-h-[24rem] flex-col justify-between p-7 sm:p-9">
-          <div>
+        <div className="profile-signature panel flex min-h-[24rem] flex-col overflow-hidden">
+          <figure className="profile-photo-frame">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/leonardo-mora.webp`}
+              alt={profile.name}
+              width="900"
+              height="1125"
+              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
+              className="profile-photo"
+            />
+          </figure>
+          <div className="profile-identity p-7 sm:p-9">
             <p className="kicker">{t.profileSection.kicker}</p>
-            <div aria-hidden="true" className="mt-8 grid h-24 w-24 place-items-center rounded-3xl border border-line bg-secondary font-display text-3xl font-bold text-gold">{profile.shortName}</div>
-          </div>
-          <div>
             <p className="font-display text-3xl font-semibold">{profile.name}</p>
             <p className="mt-2 text-base text-ink-soft">{t.profileSection.role}</p>
-            <p className="mt-6 font-mono text-xs uppercase tracking-[0.18em] text-teal">{t.profileSection.location}</p>
+            <p className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-teal">{t.profileSection.location}</p>
           </div>
         </div>
 

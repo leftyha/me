@@ -1,5 +1,6 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { stageProgress, usePinnedScrollProgress } from "@/hooks/usePinnedScrollProgress";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const PIECES = Array.from({ length: 24 }, (_, index) => ({
   id: index,
@@ -11,14 +12,16 @@ const ACCENTS = ["var(--orange)", "var(--teal)", "var(--gold)", "var(--blue)"];
 
 export function Transformation() {
   const { t } = useLanguage();
+  const reduced = useReducedMotion();
   const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
+  const visualProgress = reduced ? 1 : progress;
   const stageCount = t.transformation.stages.length;
-  const stageIndex = Math.min(stageCount - 1, Math.floor(progress * stageCount));
-  const design = stageProgress(progress, 0.12, 0.34);
-  const build = stageProgress(progress, 0.3, 0.54);
-  const integrate = stageProgress(progress, 0.48, 0.72);
-  const ship = stageProgress(progress, 0.66, 0.9);
-  const impact = stageProgress(progress, 0.84, 1);
+  const stageIndex = Math.min(stageCount - 1, Math.floor(visualProgress * stageCount));
+  const design = stageProgress(visualProgress, 0.12, 0.34);
+  const build = stageProgress(visualProgress, 0.3, 0.54);
+  const integrate = stageProgress(visualProgress, 0.48, 0.72);
+  const ship = stageProgress(visualProgress, 0.66, 0.9);
+  const impact = stageProgress(visualProgress, 0.84, 1);
 
   return (
     <section id="transformation" ref={ref} className="scroll-story scroll-story-transformation">

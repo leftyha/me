@@ -10,14 +10,27 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 function detectLang(): Lang {
   if (typeof window === "undefined") return "en";
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === "en" || stored === "es") return stored;
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored === "en" || stored === "es") return stored;
+  } catch { /* storage may be unavailable */ }
   return navigator.language?.toLowerCase().startsWith("es") ? "es" : "en";
+}
+
+function setMeta(selector: string, content: string) {
+  document.querySelector<HTMLMetaElement>(selector)?.setAttribute("content", content);
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(detectLang);
-  useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+  useEffect(() => {
+    const { meta } = dictionaries[lang];
+    document.documentElement.lang = lang;
+    document.title = meta.title;
+    setMeta('meta[name="description"]', meta.description);
+    setMeta('meta[property="og:title"]', meta.title);
+    setMeta('meta[property="og:description"]', meta.description);
+  }, [lang]);
   const setLang = useCallback((next: Lang) => {
     setLangState(next);
     try { window.localStorage.setItem(STORAGE_KEY, next); } catch { /* noop */ }

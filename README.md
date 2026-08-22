@@ -1,6 +1,6 @@
-# Leonardo Mora — Interactive Professional Experience
+# Leonardo Mora — Portfolio
 
-This repository is the production/static GitHub Pages port of the `me-alpha` experience.
+Personal portfolio built with React, TypeScript, Tailwind CSS and Vite. It presents professional experience, services and technical capabilities through a bilingual, responsive interface.
 
 ## Run locally
 
@@ -16,4 +16,4 @@ npm run build
 npm run preview
 ```
 
-The site is bilingual (English/Spanish), detects browser language, persists manual selection, and is built as a sequence of interactive scenes rather than a traditional portfolio.
+The site detects the browser language, persists manual selection and is published under `/me/` with GitHub Pages.

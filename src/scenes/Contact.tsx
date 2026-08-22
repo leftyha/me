@@ -15,7 +15,7 @@ export function Contact() {
             <p className="kicker">{t.contact.kicker}</p>
             <h2 className="mt-4 font-display text-4xl leading-[1.05] sm:text-6xl">{t.contact.title}<br /><span className="ink-gradient-text">{t.contact.titleAccent}</span></h2>
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              {primary && <a href={primary.href} target="_blank" rel="noreferrer noopener" className="primary-action">{t.contact.cta}</a>}
+              {primary && <a href={primary.href} className="primary-action">{t.contact.cta}</a>}
               {secondary.map((link) => <a key={link.id} href={link.href} target="_blank" rel="noreferrer noopener" className="secondary-action">{link.label}</a>)}
             </div>
             <p className="mt-7 font-mono text-xs uppercase tracking-[0.16em] text-teal">{t.contact.availability}</p>

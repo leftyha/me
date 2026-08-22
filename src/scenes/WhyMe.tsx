@@ -1,18 +1,16 @@
+import { useState } from "react";
+
 import { useLanguage } from "@/hooks/useLanguage";
-import { usePinnedScrollProgress } from "@/hooks/usePinnedScrollProgress";
-import { useScrollSteps } from "@/hooks/useScrollSteps";
 
 const ACCENTS = ["var(--orange)", "var(--teal)", "var(--gold)", "var(--cyan)", "var(--blue)", "var(--coral)"];
 
 export function WhyMe() {
   const { t } = useLanguage();
-  const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
-  const { index: selected, select } = useScrollSteps(progress, t.why.pairs.length);
+  const [selected, select] = useState(0);
 
   return (
-    <section id="why" ref={ref} className="scroll-story scroll-story-impact">
-      <div className="scroll-story-stage">
-        <div className="story-content mx-auto w-full max-w-6xl px-4">
+    <section id="why" className="flow-section flow-section-impact">
+        <div className="flow-content mx-auto w-full max-w-6xl px-4">
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.why.kicker}</p>
             <h2 className="story-title mt-3">{t.why.title}</h2>
@@ -40,8 +38,6 @@ export function WhyMe() {
 
           <ul className="story-tail impact-facts mt-5 flex flex-wrap gap-2">{t.why.facts.map((fact) => <li key={fact} className="tech-pill">{fact}</li>)}</ul>
         </div>
-        <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
-      </div>
     </section>
   );
 }

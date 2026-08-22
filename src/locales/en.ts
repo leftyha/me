@@ -3,7 +3,7 @@ export const en = {
   nav: { journey: "Journey", experience: "Experience", lab: "Services", about: "About", cta: "Let's connect", langLabel: "Language", menu: "Open navigation" },
   stations: ["Start", "How I decide", "How I build", "Experience", "Technology", "Services", "Impact", "Profile", "Contact"],
   arrival: {
-    name: "Leonardo Mora", roles: "Software Engineer · Product Builder · Systems Thinker", headline: "I turn complex problems into working systems.", support: "7+ years turning ambiguity into architecture: backend, integrations, financial systems and products that reach production.", ctaPrimary: "Explore my work", ctaSecondary: "Contact", engineTitle: "Solution engine", inputLabel: "Complexity in", processLabel: "Thinking", outputLabel: "Clarity out", scrollHint: "Scroll to run the engine",
+    name: "Leonardo Mora", roles: "Software Engineer · Product Builder · Systems Thinker", headline: "I turn complex problems into working systems.", support: "7+ years turning ambiguity into architecture: backend, integrations, financial systems and products that reach production.", ctaPrimary: "Explore my work", ctaSecondary: "Contact", engineTitle: "Solution engine", inputLabel: "Complexity in", processLabel: "Thinking", outputLabel: "Clarity out", scrollHint: "Automatic flow from complexity to solution",
     inputs: ["Data", "APIs", "Business", "Users", "Constraints", "Automation", "Complexity"], outputs: ["Scalable systems", "Elegant APIs", "Products", "Automated workflows", "Insights", "Impact"],
   },
   thinking: {
@@ -22,7 +22,7 @@ export const en = {
     ],
   },
   experience: {
-    kicker: "Professional experience", title: "Real problems, not desktop exercises", copy: "More than seven years building, maintaining and repairing products that operate with real users, payments, business rules and teams.", hint: "Scroll or select a company", present: "Present",
+    kicker: "Professional experience", title: "Real problems, not desktop exercises", copy: "More than seven years building, maintaining and repairing products that operate with real users, payments, business rules and teams.", hint: "Select a company to see the complete experience", present: "Present",
     jobs: [
       { id: "clai", company: "CLAI Payments · Banesco project", period: "2026 — present", role: "Software Engineer", place: "Remote", note: "Evolution of banking modules for cards, fees, issuance, replacement and profiles. Transaction-rule analysis, traceability, testing and incident resolution on critical systems.", impact: ["Safe changes on IBM i without stopping operations", "Bridging RPGLE/SQL business logic with Vue interfaces"], tags: ["IBM i", "AS400", "RPGLE", "SQL", "Vue 2", "Payments"] },
       { id: "antica", company: "Antica", period: "Oct 2021 — Jun 2025", role: "Software Development Engineer", place: "Remote · Chile", note: "Telecommunications backend with decoupled services, REST APIs, WebSockets and automation deployed on AWS.", impact: ["Python and Node.js services for operational processes", "Docker and CI/CD for reproducible delivery"], tags: ["Python", "Flask", "FastAPI", "Node.js", "AWS", "Docker"] },
@@ -33,13 +33,13 @@ export const en = {
     ],
   },
   tech: {
-    kicker: "Production stack", title: "Technology changes. The ability to build remains.", copy: "I do not sell a list of logos. I use each technology where it brings speed, reliability or a better product experience.", hint: "Scroll or choose a goal to inspect the stack.", relationLabel: "I use it for",
+    kicker: "Production stack", title: "Technology changes. The ability to build remains.", copy: "I do not sell a list of logos. I use each technology where it brings speed, reliability or a better product experience.", hint: "Choose a goal to explore the complete stack.", relationLabel: "I use it for",
     clusters: [
       { id: "build", name: "Build", note: "Where the logic lives." }, { id: "product", name: "Product", note: "What people actually touch." }, { id: "systems", name: "Systems", note: "Boundaries, contracts, runtime." }, { id: "data", name: "Data", note: "State, truth and speed." }, { id: "automation", name: "Automation", note: "Work that shouldn't be manual." }, { id: "cloud", name: "Cloud", note: "Where it runs and survives." }, { id: "enterprise", name: "Legacy / Enterprise", note: "Where the money already flows." },
     ],
   },
   lab: {
-    kicker: "Services", title: "What I can build or solve with you", copy: "Abstraction only matters when it becomes useful. These are concrete ways I can enter a project and produce value.", hint: "Scroll or choose a service.", status: "What I deliver",
+    kicker: "Services", title: "What I can build or solve with you", copy: "Abstraction only matters when it becomes useful. These are concrete ways I can enter a project and produce value.", hint: "Select a service to see what it includes.", status: "What I deliver",
     items: [
       { id: "backend-apis", name: "Backend and APIs", line: "I design services, data models and contracts that can grow without turning every change into an emergency.", flow: ["Architecture", "API", "Testing", "Observability"] },
       { id: "fullstack-products", name: "Full-stack products", line: "I turn an idea or process into a complete application: interface, backend, data, authentication and deployment.", flow: ["Discovery", "MVP", "Production", "Iteration"] },

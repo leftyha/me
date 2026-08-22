@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 
 import { clusterAccent, techClusters, type ClusterId } from "@/data/tech";
+import { useCenteredSelection } from "@/hooks/useCenteredSelection";
 import { useLanguage } from "@/hooks/useLanguage";
-import { usePinnedScrollProgress } from "@/hooks/usePinnedScrollProgress";
-import { useScrollSteps } from "@/hooks/useScrollSteps";
 
 export function TechUniverse() {
   const { t } = useLanguage();
-  const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
-  const { index: clusterIndex, select } = useScrollSteps(progress, t.tech.clusters.length);
+  const [clusterIndex, select] = useState(0);
+  const tabsRef = useCenteredSelection<HTMLDivElement>(clusterIndex);
   const cluster = t.tech.clusters[clusterIndex]!.id as ClusterId;
   const [tool, setTool] = useState<string | null>(null);
   const tools = techClusters[cluster];
@@ -18,16 +17,15 @@ export function TechUniverse() {
   useEffect(() => setTool(null), [cluster]);
 
   return (
-    <section id="technology" ref={ref} className="scroll-story scroll-story-technology">
-      <div className="scroll-story-stage">
-        <div className="story-content mx-auto w-full max-w-6xl px-4">
+    <section id="technology" className="flow-section flow-section-technology">
+        <div className="flow-content mx-auto w-full max-w-6xl px-4">
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.tech.kicker}</p>
             <h2 className="story-title mt-3">{t.tech.title}</h2>
             <p className="story-copy mt-4">{t.tech.copy}</p>
           </header>
 
-          <div className="tech-tabs mt-6" role="tablist" aria-label={t.tech.title}>
+          <div ref={tabsRef} className="tech-tabs mt-6" role="tablist" aria-label={t.tech.title}>
             {t.tech.clusters.map((item, index) => {
               const id = item.id as ClusterId;
               const isActive = index === clusterIndex;
@@ -36,7 +34,7 @@ export function TechUniverse() {
           </div>
 
           <div className="story-body mt-5 grid gap-5 lg:grid-cols-[1.18fr_0.82fr]">
-            <div className="technology-canvas story-scroll-panel panel relative min-h-[22rem] overflow-hidden p-6 grid-paper">
+            <div className="technology-canvas panel relative min-h-[22rem] overflow-hidden p-6 grid-paper">
               <p className="kicker" style={{ color: accent }}>{t.tech.clusters[clusterIndex]?.note}</p>
               <ul className="relative mt-5 flex flex-wrap gap-3">
                 {tools.map((item, index) => {
@@ -65,8 +63,6 @@ export function TechUniverse() {
             </aside>
           </div>
         </div>
-        <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
-      </div>
     </section>
   );
 }

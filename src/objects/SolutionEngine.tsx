@@ -61,12 +61,12 @@ export function SolutionEngine({ progress }: Props) {
           return <g key={`out-${i}`} opacity={appear}><path d={`M424 280 C 470 280, 470 ${y + 46}, 500 ${y + 46}`} fill="none" stroke={color} strokeWidth={2.2} strokeOpacity={0.75} /><g transform={`translate(${480 + (1 - appear) * 26} ${y + 46})`}><rect x={-5} y={-5} width={10} height={10} rx={3} fill={color} /></g><text x={500} y={y + 51} className="font-mono" fontSize={14} fill="var(--muted)">{t.arrival.outputs[i]}</text></g>;
         })}
       </svg>
-      <div className="mt-2 grid gap-3 sm:grid-cols-3">
+      <div className="engine-summary-grid mt-2 grid gap-3 sm:grid-cols-3">
         {[
           { label: t.arrival.inputLabel, value: t.arrival.inputs.slice(0, 3).join(" · "), tone: "var(--coral)" },
           { label: t.arrival.processLabel, value: `${Math.round(process * 100)}%`, tone: "var(--blue)" },
           { label: t.arrival.outputLabel, value: t.arrival.outputs.slice(0, 2).join(" · "), tone: "var(--teal)" },
-        ].map((item) => <div key={item.label} className="rounded-xl px-3 py-2 glass"><p className="kicker" style={{ color: item.tone }}>{item.label}</p><p className="mt-1 text-xs leading-snug text-ink-soft">{item.value}</p></div>)}
+        ].map((item) => <div key={item.label} className="engine-summary-card rounded-xl px-3 py-2 glass"><p className="engine-summary-label kicker" style={{ color: item.tone }}>{item.label}</p><p className="engine-summary-value mt-1 text-xs leading-snug text-ink-soft">{item.value}</p></div>)}
       </div>
       <figcaption className="sr-only">{t.arrival.outputs.join(", ")}</figcaption>
     </figure>

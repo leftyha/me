@@ -1,4 +1,5 @@
 import { useLanguage } from "@/hooks/useLanguage";
+import { useCenteredSelection } from "@/hooks/useCenteredSelection";
 import { usePinnedScrollProgress } from "@/hooks/usePinnedScrollProgress";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useScrollSteps } from "@/hooks/useScrollSteps";
@@ -21,6 +22,7 @@ export function Thinking() {
   const reduced = useReducedMotion();
   const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
   const { index: pathIndex, select } = useScrollSteps(progress, t.thinking.paths.length);
+  const carouselRef = useCenteredSelection<HTMLUListElement>(pathIndex);
   const path = t.thinking.paths[pathIndex]!;
   const activeIds = new Set(path.nodes);
 
@@ -36,7 +38,7 @@ export function Thinking() {
 
           <div className="story-body mt-7 grid items-center gap-6 lg:grid-cols-[0.82fr_1.18fr]">
             <div>
-              <ul className="thinking-nav grid gap-2" aria-label={t.thinking.hint}>
+              <ul ref={carouselRef} className="thinking-nav grid gap-2" aria-label={t.thinking.hint}>
                 {t.thinking.paths.map((item, index) => {
                   const isActive = index === pathIndex;
                   return (
@@ -46,8 +48,8 @@ export function Thinking() {
                           <span aria-hidden="true" className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: isActive ? "var(--orange)" : "var(--line-strong)" }} />
                           {item.name}
                         </span>
-                        <span className="mt-2 block text-sm leading-relaxed text-ink-soft">{item.note}</span>
-                        <span className="mt-3 flex flex-wrap gap-2">
+                        <span className="thinking-card-note mt-2 block text-sm leading-relaxed text-ink-soft">{item.note}</span>
+                        <span className="thinking-card-tags mt-3 flex flex-wrap gap-2">
                           {item.nodes.map((node) => <span key={node} className="tech-pill">{t.thinking.nodeLabels[node] ?? node}</span>)}
                         </span>
                       </button>
@@ -55,7 +57,7 @@ export function Thinking() {
                   );
                 })}
               </ul>
-              <p className="mt-4 text-sm text-ink-soft">{t.thinking.hint}</p>
+              <p className="thinking-hint mt-4 text-sm text-ink-soft">{t.thinking.hint}</p>
             </div>
 
             <div className="thinking-graph panel relative p-3 sm:p-5">

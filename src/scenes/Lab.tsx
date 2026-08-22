@@ -1,6 +1,7 @@
+import { useState } from "react";
+
+import { useCenteredSelection } from "@/hooks/useCenteredSelection";
 import { useLanguage } from "@/hooks/useLanguage";
-import { usePinnedScrollProgress } from "@/hooks/usePinnedScrollProgress";
-import { useScrollSteps } from "@/hooks/useScrollSteps";
 
 const ACCENTS = ["var(--orange)", "var(--teal)", "var(--gold)", "var(--cyan)", "var(--blue)", "var(--coral)"];
 
@@ -18,15 +19,14 @@ function ServiceVisual({ id, accent }: { id: string; accent: string }) {
 
 export function Lab() {
   const { t } = useLanguage();
-  const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
-  const { index: selected, select } = useScrollSteps(progress, t.lab.items.length);
+  const [selected, select] = useState(0);
+  const navRef = useCenteredSelection<HTMLOListElement>(selected);
   const item = t.lab.items[selected]!;
   const accent = ACCENTS[selected % ACCENTS.length] as string;
 
   return (
-    <section id="lab" ref={ref} className="scroll-story scroll-story-services">
-      <div className="scroll-story-stage">
-        <div className="story-content mx-auto w-full max-w-6xl px-4">
+    <section id="lab" className="flow-section flow-section-services">
+        <div className="flow-content mx-auto w-full max-w-6xl px-4">
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.lab.kicker}</p>
             <h2 className="story-title mt-3">{t.lab.title}</h2>
@@ -34,11 +34,11 @@ export function Lab() {
           </header>
 
           <div className="story-body mt-7 grid gap-5 lg:grid-cols-[0.54fr_1.46fr]">
-            <ol className="service-nav">
+            <ol ref={navRef} className="service-nav">
               {t.lab.items.map((service, index) => <li key={service.id}><button type="button" onClick={() => select(index)} aria-pressed={index === selected} className={`service-nav-button ${index === selected ? "is-active" : ""}`}><span className="font-mono text-xs text-orange">{String(index + 1).padStart(2, "0")}</span><span>{service.name}</span></button></li>)}
             </ol>
 
-            <article key={item.id} className="service-detail story-scroll-panel panel grid gap-5 p-6 sm:p-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+            <article key={item.id} className="service-detail panel grid gap-5 p-6 sm:p-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
               <div>
                 <p className="kicker" style={{ color: accent }}>{t.lab.status}</p>
                 <h3 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">{item.name}</h3>
@@ -50,10 +50,8 @@ export function Lab() {
               <div className="rounded-2xl border border-line bg-surface/60 p-3"><ServiceVisual id={item.id} accent={accent} /></div>
             </article>
           </div>
-          <p className="story-tail mt-4 text-sm text-ink-soft">{t.lab.hint}</p>
+          <p className="flow-hint mt-4 text-sm text-ink-soft">{t.lab.hint}</p>
         </div>
-        <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
-      </div>
     </section>
   );
 }

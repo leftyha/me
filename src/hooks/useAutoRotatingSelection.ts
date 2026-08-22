@@ -11,6 +11,8 @@ export function useAutoRotatingSelection<T extends HTMLElement>(
 ): {
   selected: number;
   select: (index: number) => void;
+  pause: () => void;
+  isVisible: boolean;
   sectionRef: RefObject<T | null>;
 } {
   const safeCount = Math.max(1, count);
@@ -19,10 +21,14 @@ export function useAutoRotatingSelection<T extends HTMLElement>(
   const [selected, setSelected] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
-  const select = useCallback((index: number) => {
+  const pause = useCallback(() => {
     pauseUntil.current = Date.now() + manualPause;
+  }, [manualPause]);
+
+  const select = useCallback((index: number) => {
+    pause();
     setSelected(Math.min(safeCount - 1, Math.max(0, index)));
-  }, [manualPause, safeCount]);
+  }, [pause, safeCount]);
 
   useEffect(() => {
     setSelected((current) => Math.min(current, safeCount - 1));
@@ -52,13 +58,12 @@ export function useAutoRotatingSelection<T extends HTMLElement>(
       if (document.visibilityState !== "visible" || Date.now() < pauseUntil.current) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const section = sectionRef.current;
-      const hasHover = window.matchMedia("(hover: hover)").matches;
-      if ((hasHover && section?.matches(":hover")) || section?.querySelector(":focus-visible")) return;
+      if (section?.querySelector(":focus-visible")) return;
       setSelected((current) => (current + 1) % safeCount);
     }, interval);
 
     return () => window.clearInterval(timer);
   }, [interval, isVisible, safeCount]);
 
-  return { selected, select, sectionRef };
+  return { selected, select, pause, isVisible, sectionRef };
 }

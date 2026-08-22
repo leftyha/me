@@ -1,28 +1,30 @@
-import { Hero } from './components/sections/Hero';
-import MindEngine from './components/sections/MindEngine';
-import SolutionFactory from './components/sections/SolutionFactory';
-import ExperienceEngine from './components/sections/ExperienceEngine';
-import TechnologyUniverse from './components/sections/TechnologyUniverse';
-import SystemsLab from './components/sections/SystemsLab';
-import ContactEngine from './components/sections/ContactEngine';
-import WhyMe from './components/sections/WhyMe';
-import ExperienceWorld from './engine/ExperienceWorld';
-import VisualEngine from './components/sections/VisualEngine';
+import { Header } from "@/components/site/Header";
+import { StationRail } from "@/components/site/StationRail";
+import { LanguageProvider } from "@/hooks/useLanguage";
+import { Arrival } from "@/scenes/Arrival";
+import { Thinking } from "@/scenes/Thinking";
+import { Transformation } from "@/scenes/Transformation";
+import { ExperienceRoute } from "@/scenes/ExperienceRoute";
+import { TechUniverse } from "@/scenes/TechUniverse";
+import { Lab } from "@/scenes/Lab";
+import { WhyMe } from "@/scenes/WhyMe";
+import { Contact } from "@/scenes/Contact";
 
-export default function App() {
+export function App() {
   return (
-    <ExperienceWorld>
-      <main className="page">
-        <Hero />
-        <VisualEngine />
-        <MindEngine />
-        <SolutionFactory />
-        <ExperienceEngine />
-        <TechnologyUniverse />
-        <SystemsLab />
+    <LanguageProvider>
+      <Header />
+      <StationRail />
+      <main>
+        <Arrival />
+        <Thinking />
+        <Transformation />
+        <ExperienceRoute />
+        <TechUniverse />
+        <Lab />
         <WhyMe />
-        <ContactEngine />
+        <Contact />
       </main>
-    </ExperienceWorld>
+    </LanguageProvider>
   );
 }

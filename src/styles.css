@@ -1,0 +1,26 @@
+@import "tailwindcss" source(none);
+@source "../src";
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px); --radius-md: calc(var(--radius) - 2px); --radius-lg: var(--radius); --radius-xl: calc(var(--radius) + 4px); --radius-2xl: calc(var(--radius) + 8px); --radius-3xl: calc(var(--radius) + 12px); --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background); --color-foreground: var(--foreground); --color-card: var(--card); --color-card-foreground: var(--card-foreground); --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground); --color-secondary: var(--secondary); --color-secondary-foreground: var(--secondary-foreground); --color-muted: var(--muted-surface); --color-muted-foreground: var(--muted); --color-border: var(--line); --color-ring: var(--blue); --color-surface: var(--surface); --color-surface-secondary: var(--surface-secondary); --color-ink: var(--ink); --color-ink-soft: var(--muted); --color-line: var(--line); --color-blue: var(--blue); --color-cyan: var(--cyan); --color-teal: var(--teal); --color-purple: var(--purple); --color-orange: var(--orange); --color-gold: var(--gold); --color-coral: var(--coral);
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif; --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+:root {
+  --radius: 0.9rem; --surface: oklch(0.985 0.006 95); --surface-secondary: oklch(0.962 0.008 95); --ink: oklch(0.24 0.03 265); --muted: oklch(0.53 0.025 265); --line: oklch(0.9 0.012 95); --blue: oklch(0.55 0.19 258); --cyan: oklch(0.72 0.13 210); --teal: oklch(0.66 0.11 185); --purple: oklch(0.56 0.19 300); --orange: oklch(0.74 0.14 62); --gold: oklch(0.8 0.12 88); --coral: oklch(0.68 0.16 24); --shadow-soft: 0 1px 2px oklch(0.24 0.03 265 / 0.05), 0 12px 30px -18px oklch(0.24 0.03 265 / 0.25); --shadow-elevated: 0 1px 3px oklch(0.24 0.03 265 / 0.06), 0 30px 60px -30px oklch(0.24 0.03 265 / 0.3); --gradient-daylight: radial-gradient(120% 80% at 8% 0%, color-mix(in oklab, var(--cyan) 16%, transparent), transparent 60%), radial-gradient(90% 70% at 100% 10%, color-mix(in oklab, var(--purple) 12%, transparent), transparent 65%), radial-gradient(80% 60% at 60% 100%, color-mix(in oklab, var(--gold) 14%, transparent), transparent 60%); --gradient-ink: linear-gradient(135deg, var(--blue), var(--purple)); --background: var(--surface); --foreground: var(--ink); --card: oklch(1 0 0); --card-foreground: var(--ink); --primary: var(--blue); --primary-foreground: oklch(0.99 0.004 95); --secondary: var(--surface-secondary); --secondary-foreground: var(--ink); --muted-surface: var(--surface-secondary);
+}
+@layer base { * { border-color: var(--line); } html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; } body { margin: 0; background-color: var(--surface); color: var(--ink); font-family: var(--font-sans); overflow-x: hidden; } h1,h2,h3,h4 { font-family: var(--font-display); letter-spacing: -0.02em; } ::selection { background: color-mix(in oklab, var(--cyan) 35%, white); } :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; } }
+@utility panel { background: color-mix(in oklab, white 82%, var(--surface)); border: 1px solid var(--line); border-radius: var(--radius-xl); box-shadow: var(--shadow-soft); }
+@utility glass { background: color-mix(in oklab, white 62%, transparent); border: 1px solid color-mix(in oklab, white 70%, var(--line)); backdrop-filter: blur(18px) saturate(140%); box-shadow: var(--shadow-soft); }
+@utility daylight { background-image: var(--gradient-daylight); }
+@utility grid-paper { background-image: linear-gradient(to right, color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px); background-size: 46px 46px; }
+@utility kicker { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); }
+@utility scene { position: relative; padding-block: clamp(5rem, 12vh, 9rem); }
+@utility ink-gradient-text { background: var(--gradient-ink); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@keyframes lm-pulse-path { from { stroke-dashoffset: 220; } to { stroke-dashoffset: 0; } }
+@keyframes lm-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes lm-drift { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(0,-6px,0); } }
+.lm-flow { stroke-dasharray: 6 10; animation: lm-pulse-path 3.2s linear infinite; }
+.lm-orbit { animation: lm-orbit 42s linear infinite; transform-origin: 50% 50%; }
+.lm-drift { animation: lm-drift 7s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .lm-flow,.lm-orbit,.lm-drift { animation: none !important; } *,*::before,*::after { transition-duration: 0.01ms !important; } }

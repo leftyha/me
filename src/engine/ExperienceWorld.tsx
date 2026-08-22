@@ -1,7 +1,8 @@
+import type { ReactNode } from 'react';
 import { useScrollController } from './ScrollController';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function ExperienceWorld({ children }: Props) {

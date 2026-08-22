@@ -10,6 +10,11 @@ export function calculatePinnedProgress(
   return Math.min(1, Math.max(0, (scrollY - sectionTop) / scrollDistance));
 }
 
+export function stageProgress(progress: number, start: number, end: number) {
+  if (end <= start) return 0;
+  return Math.min(1, Math.max(0, (progress - start) / (end - start)));
+}
+
 export function usePinnedScrollProgress<T extends HTMLElement>(): {
   ref: RefObject<T | null>;
   progress: number;

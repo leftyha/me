@@ -44,7 +44,7 @@ export function Arrival() {
           >
             <p className="kicker">{t.arrival.roles}</p>
             <h1 className="mt-4 font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">{t.arrival.name}</h1>
-            <p className="hero-headline mt-5 text-balance text-xl font-medium leading-snug sm:text-2xl"><span className="ink-gradient-text">{t.arrival.headline}</span></p>
+            <p className="hero-headline mt-5 text-balance text-2xl font-medium leading-[1.12] sm:text-3xl lg:text-4xl"><span className="ink-gradient-text">{t.arrival.headline}</span></p>
             <p className="hero-support mt-4 max-w-lg text-base leading-relaxed text-ink-soft">{t.arrival.support}</p>
             <div className="hero-actions mt-8 flex flex-wrap items-center gap-3">
               <a href="#thinking" className="inline-flex min-h-12 items-center rounded-full px-6 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-elevated)] transition-transform hover:-translate-y-0.5" style={{ background: "var(--gradient-ink)" }}>{t.arrival.ctaPrimary}</a>

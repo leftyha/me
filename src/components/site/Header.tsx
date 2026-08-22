@@ -4,10 +4,9 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { profile } from "@/data/profile";
 
 const sections = [
-  { id: "thinking", key: "journey" as const },
   { id: "experience", key: "experience" as const },
   { id: "lab", key: "lab" as const },
-  { id: "why", key: "about" as const },
+  { id: "profile", key: "about" as const },
 ];
 
 export function Header() {

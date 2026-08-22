@@ -1,9 +1,47 @@
 import { useLanguage } from "@/hooks/useLanguage";
-import { useSceneProgress } from "@/hooks/useSceneProgress";
-const ACCENTS = ["var(--coral)", "var(--orange)", "var(--gold)", "var(--teal)", "var(--cyan)", "var(--blue)"];
+import { usePinnedScrollProgress } from "@/hooks/usePinnedScrollProgress";
+import { useScrollSteps } from "@/hooks/useScrollSteps";
+
+const ACCENTS = ["var(--orange)", "var(--teal)", "var(--gold)", "var(--cyan)", "var(--blue)", "var(--coral)"];
+
 export function WhyMe() {
   const { t } = useLanguage();
-  const { ref, progress } = useSceneProgress<HTMLElement>();
-  const run = Math.min(1, Math.max(0, (progress - 0.1) / 0.6));
-  return <section id="why" ref={ref} className="scene"><div className="mx-auto max-w-6xl px-4"><header className="max-w-xl"><p className="kicker">{t.why.kicker}</p><h2 className="mt-3 font-display text-3xl sm:text-4xl">{t.why.title}</h2><p className="mt-4 text-lg leading-relaxed text-ink-soft">{t.why.copy}</p></header><div className="mt-10 rounded-3xl p-4 panel sm:p-6"><div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4"><p className="kicker text-right">{t.why.inLabel}</p><p className="rounded-full px-3 py-1 text-center font-mono text-[0.62rem] uppercase tracking-[0.2em] text-primary-foreground" style={{background:"var(--gradient-ink)"}}>LM</p><p className="kicker">{t.why.outLabel}</p></div><ul className="mt-5 grid gap-2.5">{t.why.pairs.map((pair,index)=>{const accent=ACCENTS[index%ACCENTS.length] as string; const step=Math.min(1,Math.max(0,run*1.25-index*0.1)); return <li key={pair.from} className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4"><span className="justify-self-end rounded-2xl border border-line bg-secondary px-3 py-2 text-right text-sm text-ink-soft" style={{opacity:0.45+step*0.55}}>{pair.from}</span><span aria-hidden="true" className="relative block h-6 w-12 sm:w-20" style={{color:accent}}><span className="absolute left-0 top-1/2 h-[2px] -translate-y-1/2 rounded-full" style={{width:`${step*100}%`,background:accent,opacity:0.7}}/><span className="absolute top-1/2 h-2 w-2 -translate-y-1/2 rounded-full" style={{left:`calc(${step*100}% - 4px)`,background:accent}}/></span><span className="rounded-2xl px-3 py-2 text-sm font-semibold" style={{background:`color-mix(in oklab, ${accent} 12%, white)`,border:`1px solid color-mix(in oklab, ${accent} 40%, white)`,opacity:0.35+step*0.65,transform:`translateX(${(1-step)*10}px)`,transition:"transform 200ms ease"}}>{pair.to}</span></li>;})}</ul></div><ul className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">{t.why.facts.map((fact,index)=><li key={fact} className="flex items-start gap-2 rounded-2xl px-4 py-3 glass"><span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{background:ACCENTS[index%ACCENTS.length]}}/><span className="text-sm leading-snug text-ink">{fact}</span></li>)}</ul></div></section>;
+  const { ref, progress } = usePinnedScrollProgress<HTMLElement>();
+  const { index: selected, select } = useScrollSteps(progress, t.why.pairs.length);
+
+  return (
+    <section id="why" ref={ref} className="scroll-story scroll-story-impact">
+      <div className="scroll-story-stage">
+        <div className="story-content mx-auto w-full max-w-6xl px-4">
+          <header className="max-w-3xl">
+            <p className="kicker">{t.why.kicker}</p>
+            <h2 className="story-title mt-3">{t.why.title}</h2>
+            <p className="story-copy mt-4">{t.why.copy}</p>
+          </header>
+
+          <ul className="impact-grid mt-7">
+            {t.why.pairs.map((pair, index) => {
+              const accent = ACCENTS[index % ACCENTS.length] as string;
+              const isActive = index === selected;
+              return (
+                <li key={pair.from}>
+                  <button type="button" onClick={() => select(index)} aria-pressed={isActive} className={`impact-card panel ${isActive ? "is-active" : ""}`} style={isActive ? { borderColor: accent, boxShadow: `0 20px 50px color-mix(in oklab, ${accent} 16%, transparent)` } : undefined}>
+                    <span className="kicker">{t.why.inLabel}</span>
+                    <span className="mt-2 block text-base text-ink-soft">{pair.from}</span>
+                    <span aria-hidden="true" className="impact-arrow my-4 block h-[2px] w-full origin-left" style={{ background: accent }} />
+                    <span className="kicker" style={{ color: accent }}>{t.why.outLabel}</span>
+                    <strong className="mt-2 block font-display text-xl">{pair.to}</strong>
+                    <span className="mt-3 block text-sm leading-relaxed text-ink-soft">{pair.note}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+
+          <ul className="mt-5 flex flex-wrap gap-2">{t.why.facts.map((fact) => <li key={fact} className="tech-pill">{fact}</li>)}</ul>
+          <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
+        </div>
+      </div>
+    </section>
+  );
 }

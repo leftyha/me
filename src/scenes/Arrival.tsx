@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react";
 
 import { SolutionEngine } from "@/objects/SolutionEngine";
 import { useLanguage } from "@/hooks/useLanguage";
-import { usePinnedScrollProgress } from "@/hooks/usePinnedScrollProgress";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function Arrival() {
   const { t } = useLanguage();
-  const { ref, progress: engineProgress } = usePinnedScrollProgress<HTMLElement>();
+  const reducedMotion = useReducedMotion();
+  const [engineProgress, setEngineProgress] = useState(0);
   const [entered, setEntered] = useState(false);
   const introTimer = useRef<number | null>(null);
 
@@ -17,29 +18,53 @@ export function Arrival() {
     };
   }, []);
 
+  useEffect(() => {
+    if (reducedMotion) {
+      setEngineProgress(1);
+      return;
+    }
+
+    let frame = 0;
+    const delay = 450;
+    const duration = 7200;
+    const startedAt = window.performance.now();
+    let lastPaint = 0;
+
+    const animate = (now: number) => {
+      const raw = Math.min(1, Math.max(0, (now - startedAt - delay) / duration));
+      if (now - lastPaint >= 32 || raw === 1) {
+        const eased = raw * raw * (3 - 2 * raw);
+        setEngineProgress(eased);
+        lastPaint = now;
+      }
+      if (raw < 1) frame = window.requestAnimationFrame(animate);
+    };
+
+    frame = window.requestAnimationFrame(animate);
+    return () => window.cancelAnimationFrame(frame);
+  }, [reducedMotion]);
+
   const percentage = Math.round(engineProgress * 100);
-  const contentLift = engineProgress * -22;
-  const engineLift = engineProgress * -34;
 
   return (
-    <section id="arrival" ref={ref} className="hero-scroll-scene daylight">
+    <section id="arrival" className="hero-scroll-scene daylight">
       <div className="hero-scroll-stage flex items-center pt-24">
         <div
           aria-hidden="true"
           className="absolute inset-0 opacity-40 grid-paper"
-          style={{ backgroundPosition: `center ${engineProgress * 88}px` }}
+          style={{ backgroundPosition: `center ${engineProgress * 48}px` }}
         />
         <div
           aria-hidden="true"
           className="hero-parallax-glow"
-          style={{ transform: `translate3d(${engineProgress * 28}px, ${engineProgress * -54}px, 0)` }}
+          style={{ transform: `translate3d(${engineProgress * 18}px, ${engineProgress * -24}px, 0)` }}
         />
         <div className="hero-stage-content relative mx-auto grid w-full max-w-6xl items-center gap-10 px-4 pb-16 lg:grid-cols-[1.02fr_1fr] lg:gap-6">
           <div
             className="hero-copy max-w-xl transition-[opacity,transform] duration-1000"
             style={{
               opacity: entered ? 1 : 0,
-              transform: `translate3d(0, ${entered ? contentLift : 18}px, 0)`,
+              transform: `translate3d(0, ${entered ? 0 : 18}px, 0)`,
             }}
           >
             <p className="kicker">{t.arrival.roles}</p>
@@ -59,7 +84,7 @@ export function Arrival() {
             className="hero-engine transition-[opacity,transform] duration-1000"
             style={{
               opacity: entered ? 1 : 0,
-              transform: `translate3d(0, ${entered ? engineLift : 18}px, 0) scale(${entered ? 1 : 0.94})`,
+              transform: `translate3d(0, ${entered ? 0 : 18}px, 0) scale(${entered ? 1 : 0.94})`,
             }}
           >
             <SolutionEngine progress={engineProgress} />

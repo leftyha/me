@@ -1,18 +1,18 @@
+import { useState } from "react";
+
+import { useCenteredSelection } from "@/hooks/useCenteredSelection";
 import { useLanguage } from "@/hooks/useLanguage";
-import { usePinnedScrollProgress } from "@/hooks/usePinnedScrollProgress";
-import { useScrollSteps } from "@/hooks/useScrollSteps";
 
 export function ExperienceRoute() {
   const { t } = useLanguage();
-  const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
   const jobs = t.experience.jobs;
-  const { index: selected, select } = useScrollSteps(progress, jobs.length);
+  const [selected, select] = useState(0);
+  const navRef = useCenteredSelection<HTMLOListElement>(selected);
   const current = jobs[selected]!;
 
   return (
-    <section id="experience" ref={ref} className="scroll-story scroll-story-experience">
-      <div className="scroll-story-stage">
-        <div className="story-content mx-auto w-full max-w-6xl px-4">
+    <section id="experience" className="flow-section flow-section-experience">
+        <div className="flow-content mx-auto w-full max-w-6xl px-4">
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.experience.kicker}</p>
             <h2 className="story-title mt-3">{t.experience.title}</h2>
@@ -20,7 +20,7 @@ export function ExperienceRoute() {
           </header>
 
           <div className="story-body mt-7 grid gap-5 lg:grid-cols-[0.43fr_1.57fr]">
-            <ol className="experience-nav" aria-label={t.experience.hint}>
+            <ol ref={navRef} className="experience-nav" aria-label={t.experience.hint}>
               {jobs.map((job, index) => {
                 const isActive = index === selected;
                 return (
@@ -34,7 +34,7 @@ export function ExperienceRoute() {
               })}
             </ol>
 
-            <article key={current.id} className="experience-detail story-scroll-panel panel">
+            <article key={current.id} className="experience-detail panel">
               <div className="flex flex-wrap items-start justify-between gap-4 border-b border-line p-6 sm:p-8">
                 <div>
                   <p className="kicker text-teal">{current.period} · {current.place}</p>
@@ -57,10 +57,8 @@ export function ExperienceRoute() {
               </div>
             </article>
           </div>
-          <p className="story-tail mt-4 text-sm text-ink-soft">{t.experience.hint}</p>
+          <p className="flow-hint mt-4 text-sm text-ink-soft">{t.experience.hint}</p>
         </div>
-        <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
-      </div>
     </section>
   );
 }

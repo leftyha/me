@@ -1,22 +1,22 @@
-import { useEffect, useRef } from 'react'
-import anime from 'animejs'
+import { useEffect, useRef } from 'react';
+import { animate, stagger } from 'animejs';
 
 export default function VisualEngine() {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (!ref.current) return
-    anime({
-      targets: ref.current.querySelectorAll('.signal'),
+    if (!ref.current) return;
+
+    animate(ref.current.querySelectorAll('.signal'), {
       translateY: [-10, 10],
       opacity: [0.35, 1],
       duration: 1800,
       direction: 'alternate',
       loop: true,
-      delay: anime.stagger(150),
-      easing: 'easeInOutSine',
-    })
-  }, [])
+      delay: stagger(150),
+      ease: 'inOutSine',
+    });
+  }, []);
 
   return (
     <section ref={ref} className="visual-engine">
@@ -25,5 +25,5 @@ export default function VisualEngine() {
       <div className="signal core" />
       <div className="signal" />
     </section>
-  )
+  );
 }

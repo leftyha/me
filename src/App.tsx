@@ -1,8 +1,9 @@
 import { Hero } from './components/sections/Hero'
 import SolutionFactory from './components/sections/SolutionFactory'
-import SystemsLab from './components/sections/SystemsLab'
 import ExperienceEngine from './components/sections/ExperienceEngine'
 import TechnologyUniverse from './components/sections/TechnologyUniverse'
+import SystemsLab from './components/sections/SystemsLab'
+import ContactEngine from './components/sections/ContactEngine'
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <ExperienceEngine />
       <TechnologyUniverse />
       <SystemsLab />
+      <ContactEngine />
     </main>
   )
 }

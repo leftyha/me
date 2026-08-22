@@ -11,7 +11,7 @@ const ACCENTS = ["var(--orange)", "var(--teal)", "var(--gold)", "var(--blue)"];
 
 export function Transformation() {
   const { t } = useLanguage();
-  const { ref, progress } = usePinnedScrollProgress<HTMLElement>();
+  const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
   const stageCount = t.transformation.stages.length;
   const stageIndex = Math.min(stageCount - 1, Math.floor(progress * stageCount));
   const design = stageProgress(progress, 0.12, 0.34);
@@ -24,13 +24,13 @@ export function Transformation() {
     <section id="transformation" ref={ref} className="scroll-story scroll-story-transformation">
       <div className="scroll-story-stage">
         <div className="story-content mx-auto w-full max-w-6xl px-4">
-          <header className="max-w-3xl">
+          <header className="story-header max-w-3xl">
             <p className="kicker">{t.transformation.kicker}</p>
             <h2 className="story-title mt-3">{t.transformation.title}</h2>
             <p className="story-copy mt-4">{t.transformation.copy}</p>
           </header>
 
-          <div className="mt-7 grid items-center gap-6 lg:grid-cols-[1.24fr_0.76fr]">
+          <div className="story-body mt-7 grid items-center gap-6 lg:grid-cols-[1.24fr_0.76fr]">
             <div className="transformation-canvas panel relative p-3 sm:p-5">
               <svg viewBox="0 0 600 380" className="h-auto w-full" aria-hidden="true">
                 <rect x={70} y={50} width={460} height={280} rx={18} fill="none" stroke="var(--line-strong)" strokeOpacity={0.3 + build * 0.7} strokeWidth={2} />
@@ -67,8 +67,8 @@ export function Transformation() {
               })}
             </ol>
           </div>
-          <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
         </div>
+        <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
       </div>
     </section>
   );

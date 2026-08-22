@@ -15,10 +15,15 @@ export function stageProgress(progress: number, start: number, end: number) {
   return Math.min(1, Math.max(0, (progress - start) / (end - start)));
 }
 
-export function usePinnedScrollProgress<T extends HTMLElement>(): {
+export function usePinnedScrollProgress<T extends HTMLElement>(options: {
+  startHold?: number;
+  endHold?: number;
+} = {}): {
   ref: RefObject<T | null>;
   progress: number;
 } {
+  const startHold = Math.min(0.4, Math.max(0, options.startHold ?? 0));
+  const endHold = Math.min(0.4, Math.max(0, options.endHold ?? 0));
   const ref = useRef<T | null>(null);
   const progressRef = useRef(0);
   const [progress, setProgress] = useState(0);
@@ -32,12 +37,13 @@ export function usePinnedScrollProgress<T extends HTMLElement>(): {
     const measure = () => {
       frame = 0;
       const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-      const next = calculatePinnedProgress(
+      const rawProgress = calculatePinnedProgress(
         window.scrollY,
         sectionTop,
         section.offsetHeight,
         window.innerHeight,
       );
+      const next = stageProgress(rawProgress, startHold, 1 - endHold);
 
       if (Math.abs(next - progressRef.current) < 0.0005) return;
       progressRef.current = next;
@@ -64,7 +70,7 @@ export function usePinnedScrollProgress<T extends HTMLElement>(): {
       resizeObserver.disconnect();
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [endHold, startHold]);
 
   return { ref, progress };
 }

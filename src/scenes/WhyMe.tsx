@@ -6,20 +6,20 @@ const ACCENTS = ["var(--orange)", "var(--teal)", "var(--gold)", "var(--cyan)", "
 
 export function WhyMe() {
   const { t } = useLanguage();
-  const { ref, progress } = usePinnedScrollProgress<HTMLElement>();
+  const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
   const { index: selected, select } = useScrollSteps(progress, t.why.pairs.length);
 
   return (
     <section id="why" ref={ref} className="scroll-story scroll-story-impact">
       <div className="scroll-story-stage">
         <div className="story-content mx-auto w-full max-w-6xl px-4">
-          <header className="max-w-3xl">
+          <header className="story-header max-w-3xl">
             <p className="kicker">{t.why.kicker}</p>
             <h2 className="story-title mt-3">{t.why.title}</h2>
             <p className="story-copy mt-4">{t.why.copy}</p>
           </header>
 
-          <ul className="impact-grid mt-7">
+          <ul className="story-body impact-grid mt-7">
             {t.why.pairs.map((pair, index) => {
               const accent = ACCENTS[index % ACCENTS.length] as string;
               const isActive = index === selected;
@@ -38,9 +38,9 @@ export function WhyMe() {
             })}
           </ul>
 
-          <ul className="mt-5 flex flex-wrap gap-2">{t.why.facts.map((fact) => <li key={fact} className="tech-pill">{fact}</li>)}</ul>
-          <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
+          <ul className="story-tail impact-facts mt-5 flex flex-wrap gap-2">{t.why.facts.map((fact) => <li key={fact} className="tech-pill">{fact}</li>)}</ul>
         </div>
+        <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
       </div>
     </section>
   );

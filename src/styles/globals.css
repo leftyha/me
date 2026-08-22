@@ -62,40 +62,58 @@ button {
 .secondary { opacity: .7; }
 
 .problem-scene {
-  perspective: 1000px;
+  perspective: 1200px;
   display: grid;
   place-items: center;
 }
 
 .problem-box {
-  width: 260px;
-  height: 260px;
+  width: 280px;
+  height: 280px;
   position: relative;
   transform-style: preserve-3d;
   border: 1px solid rgba(255,255,255,.3);
-  background: rgba(255,255,255,.04);
-  box-shadow: 0 0 80px rgba(100,150,255,.15);
+  background: rgba(255,255,255,.03);
+  box-shadow: 0 0 100px rgba(100,150,255,.18);
 }
 
-.box-core, .node {
+.box-layer,
+.solution-ring,
+.box-core,
+.node {
   position: absolute;
-  border-radius: 50%;
+}
+
+.layer-one {
+  inset: 20px;
+  border: 1px solid rgba(120,180,255,.25);
+  transform: translateZ(-30px);
 }
 
 .box-core {
-  inset: 70px;
+  inset: 75px;
+  border-radius: 50%;
   background: rgba(120,180,255,.35);
 }
 
 .node {
   width: 18px;
   height: 18px;
+  border-radius: 50%;
   background: white;
+  box-shadow: 0 0 20px white;
 }
 
 .node-a { top: 30px; left: 40px; }
 .node-b { right: 35px; bottom: 50px; }
 .node-c { left: 90px; bottom: 25px; }
+
+.solution-ring {
+  inset: 45px;
+  border-radius: 50%;
+  border: 1px solid rgba(120,180,255,.5);
+  transform: translateZ(40px);
+}
 
 @media (max-width: 800px) {
   .hero-stage { grid-template-columns: 1fr; }

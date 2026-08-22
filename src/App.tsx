@@ -1,4 +1,4 @@
-import Hero from './components/sections/Hero'
+import { Hero } from './components/sections/Hero'
 import SolutionFactory from './components/sections/SolutionFactory'
 import SystemsLab from './components/sections/SystemsLab'
 

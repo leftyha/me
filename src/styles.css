@@ -167,6 +167,8 @@
 .thinking-card:hover { border-color: var(--line-strong); }
 .thinking-card.is-active { transform: translateX(0.45rem); border-color: var(--orange); background: var(--card); box-shadow: var(--shadow-soft); }
 .thinking-path-detail { animation: thinking-detail-in 560ms cubic-bezier(.22,.8,.3,1) both; }
+.thinking-node-pill { opacity: 0.38; transition: opacity 320ms ease, border-color 320ms ease, color 320ms ease, background 320ms ease; }
+.thinking-node-pill.is-active { border-color: var(--orange); background: color-mix(in oklab, var(--orange) 12%, var(--secondary)); color: var(--ink); opacity: 1; }
 .thinking-graph { width: 100%; min-width: 0; min-height: 0; align-self: start; overflow: hidden; }
 .thinking-graph-frame { width: 100%; max-width: 100%; min-width: 0; aspect-ratio: 2 / 1; overflow: hidden; }
 .thinking-graph svg { display: block; width: 100%; max-width: 100%; height: 100%; margin-inline: auto; }

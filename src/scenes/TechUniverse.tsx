@@ -1,21 +1,41 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { clusterAccent, techClusters, type ClusterId } from "@/data/tech";
 import { useAutoRotatingSelection } from "@/hooks/useAutoRotatingSelection";
 import { useCenteredSelection } from "@/hooks/useCenteredSelection";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function TechUniverse() {
   const { t } = useLanguage();
-  const { selected: clusterIndex, select, sectionRef } = useAutoRotatingSelection<HTMLElement>(t.tech.clusters.length);
+  const reduced = useReducedMotion();
+  const { selected: clusterIndex, select, pause, isVisible, sectionRef } = useAutoRotatingSelection<HTMLElement>(t.tech.clusters.length);
   const tabsRef = useCenteredSelection<HTMLDivElement>(clusterIndex);
   const cluster = t.tech.clusters[clusterIndex]!.id as ClusterId;
-  const [tool, setTool] = useState<string | null>(null);
   const tools = techClusters[cluster];
-  const activeTool = tools.find((item) => item.name === tool) ?? tools[0]!;
+  const [toolIndex, setToolIndex] = useState(0);
+  const toolPauseUntil = useRef(0);
+  const activeTool = tools[Math.min(toolIndex, tools.length - 1)]!;
   const accent = clusterAccent[cluster];
 
-  useEffect(() => setTool(null), [cluster]);
+  const chooseTool = useCallback((index: number) => {
+    toolPauseUntil.current = Date.now() + 6000;
+    pause();
+    setToolIndex(index);
+  }, [pause]);
+
+  useEffect(() => setToolIndex(0), [cluster]);
+
+  useEffect(() => {
+    if (!isVisible || reduced || tools.length < 2) return;
+
+    const timer = window.setInterval(() => {
+      if (document.visibilityState !== "visible" || Date.now() < toolPauseUntil.current) return;
+      setToolIndex((current) => (current + 1) % tools.length);
+    }, 1700);
+
+    return () => window.clearInterval(timer);
+  }, [isVisible, reduced, tools.length, cluster]);
 
   return (
     <section id="technology" ref={sectionRef} className="flow-section flow-section-technology">
@@ -40,7 +60,7 @@ export function TechUniverse() {
               <ul className="relative mt-5 flex flex-wrap gap-3">
                 {tools.map((item, index) => {
                   const isActive = item.name === activeTool.name;
-                  return <li key={`${item.name}-${index}`}><button type="button" onMouseEnter={() => setTool(item.name)} onFocus={() => setTool(item.name)} onClick={() => setTool(item.name)} aria-pressed={isActive} className={`tool-button ${isActive ? "is-active" : ""}`} style={{ borderColor: isActive ? accent : "var(--line)" }}><span className="font-display text-base font-semibold">{item.name}</span></button></li>;
+                  return <li key={`${item.name}-${index}`}><button type="button" onFocus={() => chooseTool(index)} onClick={() => chooseTool(index)} aria-pressed={isActive} className={`tool-button ${isActive ? "is-active" : ""}`} style={{ borderColor: isActive ? accent : "var(--line)" }}><span className="font-display text-base font-semibold">{item.name}</span></button></li>;
                 })}
               </ul>
 

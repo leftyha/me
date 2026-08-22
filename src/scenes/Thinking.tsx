@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { useLanguage } from "@/hooks/useLanguage";
 import { useAutoRotatingSelection } from "@/hooks/useAutoRotatingSelection";
 import { useCenteredSelection } from "@/hooks/useCenteredSelection";
@@ -19,10 +21,38 @@ const CENTER = { x: 380, y: 190 };
 export function Thinking() {
   const { t } = useLanguage();
   const reduced = useReducedMotion();
-  const { selected: pathIndex, select, sectionRef } = useAutoRotatingSelection<HTMLElement>(t.thinking.paths.length, { interval: 5000 });
+  const { selected: pathIndex, select, isVisible, sectionRef } = useAutoRotatingSelection<HTMLElement>(t.thinking.paths.length, { interval: 5000 });
   const carouselRef = useCenteredSelection<HTMLUListElement>(pathIndex);
   const path = t.thinking.paths[pathIndex]!;
-  const activeIds = new Set(path.nodes);
+  const [nodeProgress, setNodeProgress] = useState({ pathId: path.id, count: 1 });
+  const visibleNodeCount = reduced
+    ? path.nodes.length
+    : nodeProgress.pathId === path.id ? nodeProgress.count : 1;
+  const revealedNodes = path.nodes.slice(0, visibleNodeCount);
+  const activeIds = new Set(revealedNodes);
+
+  useEffect(() => {
+    if (reduced) {
+      setNodeProgress({ pathId: path.id, count: path.nodes.length });
+      return;
+    }
+
+    setNodeProgress({ pathId: path.id, count: 1 });
+    if (!isVisible || path.nodes.length < 2) return;
+
+    const timer = window.setInterval(() => {
+      setNodeProgress((current) => {
+        const count = current.pathId === path.id ? current.count : 1;
+        if (count >= path.nodes.length) {
+          window.clearInterval(timer);
+          return current;
+        }
+        return { pathId: path.id, count: count + 1 };
+      });
+    }, 800);
+
+    return () => window.clearInterval(timer);
+  }, [isVisible, path.id, path.nodes.length, reduced]);
 
   return (
     <section id="thinking" ref={sectionRef} className="flow-section flow-section-thinking">
@@ -55,7 +85,7 @@ export function Thinking() {
                 <h3 className="mt-2 font-display text-2xl font-semibold">{path.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-soft">{path.note}</p>
                 <ul className="mt-4 flex flex-wrap gap-2">
-                  {path.nodes.map((node) => <li key={node} className="tech-pill">{t.thinking.nodeLabels[node] ?? node}</li>)}
+                  {path.nodes.map((node) => <li key={node} className={`thinking-node-pill tech-pill ${activeIds.has(node) ? "is-active" : ""}`}>{t.thinking.nodeLabels[node] ?? node}</li>)}
                 </ul>
               </article>
             </div>
@@ -68,7 +98,7 @@ export function Thinking() {
                   return <line key={`link-${node.id}`} x1={CENTER.x} y1={CENTER.y} x2={node.x} y2={node.y} stroke={isOn ? node.color : "var(--line-strong)"} strokeWidth={isOn ? 3 : 1.4} strokeOpacity={isOn ? 0.9 : 0.45} className={isOn && !reduced ? "lm-flow" : undefined} style={{ transition: `stroke 650ms ease ${index * 35}ms, stroke-width 650ms ease ${index * 35}ms, stroke-opacity 650ms ease ${index * 35}ms` }} />;
                 })}
                 <g key={path.id} className="mind-route-layer">
-                  {path.nodes.map((id, index) => {
+                  {revealedNodes.map((id, index) => {
                     const from = index === 0 ? null : NODES.find((node) => node.id === path.nodes[index - 1]);
                     const to = NODES.find((node) => node.id === id);
                     if (!from || !to) return null;

@@ -26,7 +26,7 @@ export default function MindEngine() {
     animate(nodeRefs.current, {
       translateY: [-8, 8],
       duration: 1800,
-      delay: (_, i = 0) => i * 120,
+      delay: (_element: unknown, i: number = 0) => i * 120,
       loop: true,
       alternate: true,
       ease: 'inOutSine',

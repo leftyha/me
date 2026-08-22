@@ -156,7 +156,7 @@
 .story-header, .story-body { min-height: 0; }
 .story-meter { position: absolute; z-index: 2; right: clamp(1.25rem, 3vw, 3rem); bottom: max(1.25rem, env(safe-area-inset-bottom)); left: clamp(1.25rem, 3vw, 3rem); height: 3px; overflow: hidden; border-radius: 999px; background: var(--line); }
 .story-meter span { display: block; height: 100%; border-radius: inherit; background: var(--gradient-ink); transition: width 80ms linear; }
-.story-scroll-panel { overscroll-behavior: contain; scrollbar-color: var(--line-strong) transparent; scrollbar-width: thin; }
+.story-scroll-panel { scrollbar-color: var(--line-strong) transparent; scrollbar-width: thin; }
 .story-scroll-panel::-webkit-scrollbar { width: 5px; }
 .story-scroll-panel::-webkit-scrollbar-track { background: transparent; }
 .story-scroll-panel::-webkit-scrollbar-thumb { border-radius: 999px; background: var(--line-strong); }

@@ -61,7 +61,8 @@ export function Thinking() {
             </div>
 
             <div className="thinking-graph panel relative p-3 sm:p-5">
-              <svg viewBox="0 0 760 380" preserveAspectRatio="xMidYMid meet" className="h-auto w-full" aria-hidden="true">
+              <div className="thinking-graph-frame">
+                <svg viewBox="0 0 760 380" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
                 {NODES.map((node, index) => {
                   const isOn = activeIds.has(node.id);
                   return <line key={`link-${node.id}`} x1={CENTER.x} y1={CENTER.y} x2={node.x} y2={node.y} stroke={isOn ? node.color : "var(--line-strong)"} strokeWidth={isOn ? 3 : 1.4} strokeOpacity={isOn ? 0.9 : 0.45} className={isOn && !reduced ? "lm-flow" : undefined} style={{ transition: `stroke 650ms ease ${index * 35}ms, stroke-width 650ms ease ${index * 35}ms, stroke-opacity 650ms ease ${index * 35}ms` }} />;
@@ -90,7 +91,8 @@ export function Thinking() {
                     </g>
                   );
                 })}
-              </svg>
+                </svg>
+              </div>
               <p key={path.id} className="mind-route-caption px-3 pb-2 pt-1 text-center font-mono text-xs uppercase tracking-[0.16em] text-gold">{t.thinking.core} — {path.name}</p>
             </div>
           </div>

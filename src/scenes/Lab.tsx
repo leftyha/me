@@ -30,11 +30,10 @@ export function Lab() {
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.lab.kicker}</p>
             <h2 className="story-title mt-3">{t.lab.title}</h2>
-            <p className="story-copy mt-4">{t.lab.copy}</p>
           </header>
 
           <div className="story-body mt-7 grid gap-5 lg:grid-cols-[0.54fr_1.46fr]">
-            <ol ref={navRef} className="service-nav">
+            <ol ref={navRef} className="service-nav" aria-label={t.lab.title}>
               {t.lab.items.map((service, index) => <li key={service.id}><button type="button" onClick={() => select(index)} aria-pressed={index === selected} className={`service-nav-button ${index === selected ? "is-active" : ""}`}><span className="font-mono text-xs text-orange">{String(index + 1).padStart(2, "0")}</span><span>{service.name}</span></button></li>)}
             </ol>
 
@@ -50,7 +49,6 @@ export function Lab() {
               <div className="rounded-2xl border border-line bg-surface/60 p-3"><ServiceVisual id={item.id} accent={accent} /></div>
             </article>
           </div>
-          <p className="flow-hint mt-4 text-sm text-ink-soft">{t.lab.hint}</p>
         </div>
     </section>
   );

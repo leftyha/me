@@ -14,7 +14,6 @@ export function WhyMe() {
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.why.kicker}</p>
             <h2 className="story-title mt-3">{t.why.title}</h2>
-            <p className="story-copy mt-4">{t.why.copy}</p>
           </header>
 
           <ul className="story-body impact-grid mt-7">

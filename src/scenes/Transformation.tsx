@@ -27,7 +27,6 @@ export function Transformation() {
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.transformation.kicker}</p>
             <h2 className="story-title mt-3">{t.transformation.title}</h2>
-            <p className="story-copy mt-4">{t.transformation.copy}</p>
           </header>
 
           <div className="story-body mt-7 grid items-center gap-6 lg:grid-cols-[1.24fr_0.76fr]">
@@ -51,7 +50,6 @@ export function Transformation() {
                 <g opacity={impact}>{[0, 1, 2, 3, 4].map((index) => <circle key={index} cx={120 + index * 90} cy={354} r={5 + impact * 5} fill={ACCENTS[index % 4]} opacity={0.85} />)}</g>
                 <defs><linearGradient id="shipGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="var(--orange)" /><stop offset="100%" stopColor="var(--teal)" /></linearGradient></defs>
               </svg>
-              <p className="px-3 pb-2 pt-2 text-sm text-ink-soft">{t.transformation.hint}</p>
             </div>
 
             <ol className="grid gap-2 self-start">

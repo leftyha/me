@@ -59,7 +59,6 @@ export function TechUniverse() {
               <ul className="mt-6 grid gap-3">
                 {activeTool.relations.map((relation) => <li key={relation} className="flex items-center gap-3 text-base text-ink-soft"><span aria-hidden="true" className="h-1.5 w-8 rounded-full" style={{ background: accent }} />{relation}</li>)}
               </ul>
-              <p className="mt-8 text-sm leading-relaxed text-ink-soft">{t.tech.hint}</p>
             </aside>
           </div>
         </div>

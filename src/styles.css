@@ -167,8 +167,8 @@
 .thinking-card:hover { border-color: var(--line-strong); }
 .thinking-card.is-active { transform: translateX(0.45rem); border-color: var(--orange); background: var(--card); box-shadow: var(--shadow-soft); }
 .thinking-path-detail { animation: thinking-detail-in 560ms cubic-bezier(.22,.8,.3,1) both; }
-.thinking-graph { min-height: 100%; overflow: hidden; }
-.thinking-graph svg { display: block; width: 100%; max-width: 100%; height: auto; margin-inline: auto; }
+.thinking-graph { width: 100%; min-width: 0; min-height: 0; align-self: start; overflow: hidden; }
+.thinking-graph svg { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 2 / 1; margin-inline: auto; }
 .mind-route-layer { transform-origin: center; animation: mind-route-in 720ms cubic-bezier(.22,.8,.3,1) both; }
 .mind-route-layer path { animation: mind-path-in 760ms ease both; }
 .mind-route-caption { animation: caption-in 520ms ease both; }
@@ -273,7 +273,7 @@
   .thinking-path-detail h3 { font-size: 1.3rem; }
   .thinking-path-detail .tech-pill { font-size: 0.65rem; }
   .thinking-graph { min-height: 0; padding: 0.5rem; }
-  .thinking-graph svg { width: 100%; max-height: none; }
+  .thinking-graph svg { width: 100%; max-height: none; aspect-ratio: 2 / 1; }
   .mind-route-caption { padding-inline: 0.5rem; overflow-wrap: anywhere; font-size: 0.6rem; line-height: 1.4; letter-spacing: 0.08em; }
 
   .transformation-canvas svg { max-height: min(25dvh, 13.5rem); }

@@ -4,17 +4,17 @@ import { useCenteredSelection } from "@/hooks/useCenteredSelection";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const NODES = [
-  { id: "Business", x: 300, y: 60, color: "var(--gold)" },
-  { id: "Product", x: 470, y: 130, color: "var(--cyan)" },
-  { id: "Code", x: 510, y: 300, color: "var(--blue)" },
-  { id: "Data", x: 420, y: 440, color: "var(--purple)" },
-  { id: "Systems", x: 230, y: 460, color: "var(--teal)" },
-  { id: "Automation", x: 90, y: 340, color: "var(--orange)" },
-  { id: "Users", x: 110, y: 160, color: "var(--coral)" },
-  { id: "Constraints", x: 200, y: 40, color: "var(--muted)" },
+  { id: "Business", x: 380, y: 48, color: "var(--gold)" },
+  { id: "Product", x: 590, y: 92, color: "var(--cyan)" },
+  { id: "Code", x: 670, y: 205, color: "var(--blue)" },
+  { id: "Data", x: 560, y: 310, color: "var(--purple)" },
+  { id: "Systems", x: 350, y: 326, color: "var(--teal)" },
+  { id: "Automation", x: 145, y: 286, color: "var(--orange)" },
+  { id: "Users", x: 92, y: 145, color: "var(--coral)" },
+  { id: "Constraints", x: 225, y: 60, color: "var(--muted)" },
 ];
 
-const CENTER = { x: 300, y: 262 };
+const CENTER = { x: 380, y: 190 };
 
 export function Thinking() {
   const { t } = useLanguage();
@@ -61,7 +61,7 @@ export function Thinking() {
             </div>
 
             <div className="thinking-graph panel relative p-3 sm:p-5">
-              <svg viewBox="0 0 600 520" className="h-auto w-full" aria-hidden="true">
+              <svg viewBox="0 0 760 380" preserveAspectRatio="xMidYMid meet" className="h-auto w-full" aria-hidden="true">
                 {NODES.map((node, index) => {
                   const isOn = activeIds.has(node.id);
                   return <line key={`link-${node.id}`} x1={CENTER.x} y1={CENTER.y} x2={node.x} y2={node.y} stroke={isOn ? node.color : "var(--line-strong)"} strokeWidth={isOn ? 3 : 1.4} strokeOpacity={isOn ? 0.9 : 0.45} className={isOn && !reduced ? "lm-flow" : undefined} style={{ transition: `stroke 650ms ease ${index * 35}ms, stroke-width 650ms ease ${index * 35}ms, stroke-opacity 650ms ease ${index * 35}ms` }} />;
@@ -74,9 +74,9 @@ export function Thinking() {
                     return <path key={`seq-${id}`} d={`M${from.x} ${from.y} Q ${CENTER.x} ${CENTER.y} ${to.x} ${to.y}`} fill="none" stroke={to.color} strokeOpacity={0.55} strokeWidth={2.2} strokeDasharray="5 9" style={{ animationDelay: `${index * 90}ms` }} />;
                   })}
                 </g>
-                <circle cx={CENTER.x} cy={CENTER.y} r={70} fill="var(--card)" stroke="var(--line-strong)" strokeWidth={2} />
-                <circle cx={CENTER.x} cy={CENTER.y} r={48} fill="none" stroke="var(--orange)" strokeOpacity={0.58} strokeDasharray="7 11" className={reduced ? undefined : "lm-orbit"} style={{ transformOrigin: `${CENTER.x}px ${CENTER.y}px` }} />
-                <circle cx={CENTER.x} cy={CENTER.y} r={25} fill="url(#thinkCore)" />
+                <circle cx={CENTER.x} cy={CENTER.y} r={56} fill="var(--card)" stroke="var(--line-strong)" strokeWidth={2} />
+                <circle cx={CENTER.x} cy={CENTER.y} r={39} fill="none" stroke="var(--orange)" strokeOpacity={0.58} strokeDasharray="7 11" className={reduced ? undefined : "lm-orbit"} style={{ transformOrigin: `${CENTER.x}px ${CENTER.y}px` }} />
+                <circle cx={CENTER.x} cy={CENTER.y} r={21} fill="url(#thinkCore)" />
                 <defs><linearGradient id="thinkCore" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="var(--orange)" /><stop offset="100%" stopColor="var(--teal)" /></linearGradient></defs>
                 {NODES.map((node, index) => {
                   const isOn = activeIds.has(node.id);
@@ -86,7 +86,7 @@ export function Thinking() {
                         <circle r={isOn ? 17 : 11} fill="var(--card)" stroke={isOn ? node.color : "var(--line-strong)"} strokeWidth={isOn ? 3.5 : 1.5} style={{ transition: "r 500ms ease, stroke 500ms ease, stroke-width 500ms ease" }} />
                         <circle r={isOn ? 6 : 3.5} fill={isOn ? node.color : "var(--line-strong)"} style={{ transition: "r 500ms ease, fill 500ms ease" }} />
                       </g>
-                      <text x={node.x} y={node.y + 38} textAnchor="middle" fill={isOn ? "var(--ink)" : "var(--muted)"} opacity={isOn ? 1 : 0.58} fontSize="15" fontFamily="var(--font-mono)" letterSpacing="1.4">{t.thinking.nodeLabels[node.id] ?? node.id}</text>
+                      <text x={node.x} y={node.y + 31} textAnchor="middle" fill={isOn ? "var(--ink)" : "var(--muted)"} opacity={isOn ? 1 : 0.58} fontSize="14" fontFamily="var(--font-mono)" letterSpacing="1.1">{t.thinking.nodeLabels[node.id] ?? node.id}</text>
                     </g>
                   );
                 })}

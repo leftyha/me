@@ -26,7 +26,7 @@ export default function MindEngine() {
     animate(nodeRefs.current, {
       translateY: [-8, 8],
       duration: 1800,
-      delay: (_, i) => i * 120,
+      delay: (_, i = 0) => i * 120,
       loop: true,
       alternate: true,
       ease: 'inOutSine',
@@ -38,23 +38,12 @@ export default function MindEngine() {
       <div className="mind-copy">
         <p className="eyebrow">How I think</p>
         <h2>Connecting problems, systems and possibilities.</h2>
-        <p>
-          I look beyond isolated tasks. I connect product, technology,
-          business and execution to find practical solutions.
-        </p>
+        <p>I look beyond isolated tasks. I connect product, technology, business and execution to find practical solutions.</p>
       </div>
-
       <div className="mind-network">
         <div ref={core} className="mind-core" />
         {nodes.map((node, index) => (
-          <div
-            key={node.label}
-            ref={(element) => {
-              if (element) nodeRefs.current[index] = element;
-            }}
-            className="mind-node"
-            style={{ left: `${node.x}%`, top: `${node.y}%` }}
-          >
+          <div key={node.label} ref={(element) => { if (element) nodeRefs.current[index] = element; }} className="mind-node" style={{ left: `${node.x}%`, top: `${node.y}%` }}>
             {node.label}
           </div>
         ))}

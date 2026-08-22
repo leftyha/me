@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
 import { clusterAccent, techClusters, type ClusterId } from "@/data/tech";
+import { useAutoRotatingSelection } from "@/hooks/useAutoRotatingSelection";
 import { useCenteredSelection } from "@/hooks/useCenteredSelection";
 import { useLanguage } from "@/hooks/useLanguage";
 
 export function TechUniverse() {
   const { t } = useLanguage();
-  const [clusterIndex, select] = useState(0);
+  const { selected: clusterIndex, select, sectionRef } = useAutoRotatingSelection<HTMLElement>(t.tech.clusters.length);
   const tabsRef = useCenteredSelection<HTMLDivElement>(clusterIndex);
   const cluster = t.tech.clusters[clusterIndex]!.id as ClusterId;
   const [tool, setTool] = useState<string | null>(null);
@@ -17,7 +18,7 @@ export function TechUniverse() {
   useEffect(() => setTool(null), [cluster]);
 
   return (
-    <section id="technology" className="flow-section flow-section-technology">
+    <section id="technology" ref={sectionRef} className="flow-section flow-section-technology">
         <div className="flow-content mx-auto w-full max-w-6xl px-4">
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.tech.kicker}</p>

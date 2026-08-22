@@ -1,8 +1,7 @@
 import { useLanguage } from "@/hooks/useLanguage";
+import { useAutoRotatingSelection } from "@/hooks/useAutoRotatingSelection";
 import { useCenteredSelection } from "@/hooks/useCenteredSelection";
-import { usePinnedScrollProgress } from "@/hooks/usePinnedScrollProgress";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { useScrollSteps } from "@/hooks/useScrollSteps";
 
 const NODES = [
   { id: "Business", x: 300, y: 60, color: "var(--gold)" },
@@ -20,24 +19,22 @@ const CENTER = { x: 300, y: 262 };
 export function Thinking() {
   const { t } = useLanguage();
   const reduced = useReducedMotion();
-  const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
-  const { index: pathIndex, select } = useScrollSteps(reduced ? 0 : progress, t.thinking.paths.length);
+  const { selected: pathIndex, select, sectionRef } = useAutoRotatingSelection<HTMLElement>(t.thinking.paths.length, { interval: 5000 });
   const carouselRef = useCenteredSelection<HTMLUListElement>(pathIndex);
   const path = t.thinking.paths[pathIndex]!;
   const activeIds = new Set(path.nodes);
 
   return (
-    <section id="thinking" ref={ref} className="scroll-story scroll-story-thinking">
-      <div className="scroll-story-stage">
-        <div className="story-content mx-auto w-full max-w-6xl px-4">
+    <section id="thinking" ref={sectionRef} className="flow-section flow-section-thinking">
+        <div className="flow-content mx-auto w-full max-w-6xl px-4">
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.thinking.kicker}</p>
             <h2 className="story-title mt-3">{t.thinking.title}</h2>
             <p className="story-copy mt-4">{t.thinking.copy}</p>
           </header>
 
-          <div className="story-body mt-7 grid items-center gap-6 lg:grid-cols-[0.82fr_1.18fr]">
-            <div>
+          <div className="story-body thinking-layout mt-7 grid items-stretch gap-6 lg:grid-cols-[0.82fr_1.18fr]">
+            <div className="thinking-copy-column">
               <ul ref={carouselRef} className="thinking-nav grid gap-2" aria-label={t.thinking.pathsLabel}>
                 {t.thinking.paths.map((item, index) => {
                   const isActive = index === pathIndex;
@@ -48,15 +45,19 @@ export function Thinking() {
                           <span aria-hidden="true" className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: isActive ? "var(--orange)" : "var(--line-strong)" }} />
                           {item.name}
                         </span>
-                        <span className="thinking-card-note mt-2 block text-sm leading-relaxed text-ink-soft">{item.note}</span>
-                        <span className="thinking-card-tags mt-3 flex flex-wrap gap-2">
-                          {item.nodes.map((node) => <span key={node} className="tech-pill">{t.thinking.nodeLabels[node] ?? node}</span>)}
-                        </span>
                       </button>
                     </li>
                   );
                 })}
               </ul>
+              <article key={path.id} className="thinking-path-detail panel mt-4 p-5" aria-label={path.name}>
+                <p className="kicker">{t.thinking.core}</p>
+                <h3 className="mt-2 font-display text-2xl font-semibold">{path.name}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{path.note}</p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {path.nodes.map((node) => <li key={node} className="tech-pill">{t.thinking.nodeLabels[node] ?? node}</li>)}
+                </ul>
+              </article>
             </div>
 
             <div className="thinking-graph panel relative p-3 sm:p-5">
@@ -79,21 +80,21 @@ export function Thinking() {
                 <defs><linearGradient id="thinkCore" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="var(--orange)" /><stop offset="100%" stopColor="var(--teal)" /></linearGradient></defs>
                 {NODES.map((node, index) => {
                   const isOn = activeIds.has(node.id);
-                  return <g key={node.id} transform={`translate(${node.x} ${node.y})`} style={{ transition: `opacity 500ms ease ${index * 35}ms` }}><circle r={isOn ? 17 : 11} fill="var(--card)" stroke={isOn ? node.color : "var(--line-strong)"} strokeWidth={isOn ? 3.5 : 1.5} style={{ transition: "r 500ms ease, stroke 500ms ease, stroke-width 500ms ease" }} /><circle r={isOn ? 6 : 3.5} fill={isOn ? node.color : "var(--line-strong)"} style={{ transition: "r 500ms ease, fill 500ms ease" }} /></g>;
+                  return (
+                    <g key={node.id} style={{ transition: `opacity 500ms ease ${index * 35}ms` }}>
+                      <g transform={`translate(${node.x} ${node.y})`}>
+                        <circle r={isOn ? 17 : 11} fill="var(--card)" stroke={isOn ? node.color : "var(--line-strong)"} strokeWidth={isOn ? 3.5 : 1.5} style={{ transition: "r 500ms ease, stroke 500ms ease, stroke-width 500ms ease" }} />
+                        <circle r={isOn ? 6 : 3.5} fill={isOn ? node.color : "var(--line-strong)"} style={{ transition: "r 500ms ease, fill 500ms ease" }} />
+                      </g>
+                      <text x={node.x} y={node.y + 38} textAnchor="middle" fill={isOn ? "var(--ink)" : "var(--muted)"} opacity={isOn ? 1 : 0.58} fontSize="15" fontFamily="var(--font-mono)" letterSpacing="1.4">{t.thinking.nodeLabels[node.id] ?? node.id}</text>
+                    </g>
+                  );
                 })}
               </svg>
-              <ul className="pointer-events-none absolute inset-0">
-                {NODES.map((node) => {
-                  const isOn = activeIds.has(node.id);
-                  return <li key={node.id} className="absolute -translate-x-1/2 whitespace-nowrap font-mono text-[0.72rem] uppercase tracking-[0.12em]" style={{ left: `${(node.x / 600) * 100}%`, top: `calc(${(node.y / 520) * 100}% + 1.45rem)`, color: isOn ? "var(--ink)" : "var(--muted)", opacity: isOn ? 1 : 0.6, transition: "color 500ms ease, opacity 500ms ease" }}>{t.thinking.nodeLabels[node.id] ?? node.id}</li>;
-                })}
-              </ul>
               <p key={path.id} className="mind-route-caption px-3 pb-2 pt-1 text-center font-mono text-xs uppercase tracking-[0.16em] text-gold">{t.thinking.core} — {path.name}</p>
             </div>
           </div>
         </div>
-        <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
-      </div>
     </section>
   );
 }

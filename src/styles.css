@@ -146,12 +146,12 @@
 .flow-content { padding-inline: clamp(1.25rem, 3vw, 3rem); }
 .flow-section-experience,
 .flow-section-services { background: color-mix(in oklab, var(--surface-secondary) 42%, var(--surface)); }
+.flow-section-thinking { background: color-mix(in oklab, var(--surface-secondary) 42%, var(--surface)); }
 .flow-section-technology,
 .flow-section-impact { background-image: var(--gradient-daylight); }
 
 .scroll-story { position: relative; height: 320svh; scroll-margin-top: 4.5rem; border-bottom: 1px solid var(--line); }
 .scroll-story:nth-of-type(odd) { background: color-mix(in oklab, var(--surface-secondary) 42%, var(--surface)); }
-.scroll-story-thinking { height: 300svh; }
 .scroll-story-transformation { height: 360svh; background-image: var(--gradient-daylight); }
 .scroll-story-stage { position: sticky; top: 0; isolation: isolate; display: flex; height: 100svh; height: 100dvh; align-items: center; overflow: clip; padding-block: clamp(5rem, 8dvh, 6rem) clamp(3.25rem, 5.5dvh, 4.25rem); }
 .scroll-story-stage::before,
@@ -166,8 +166,9 @@
 .thinking-card { border-color: var(--line); background: color-mix(in oklab, var(--secondary) 72%, transparent); color: var(--ink); transition: transform 450ms ease, border-color 450ms ease, background 450ms ease, opacity 450ms ease; }
 .thinking-card:hover { border-color: var(--line-strong); }
 .thinking-card.is-active { transform: translateX(0.45rem); border-color: var(--orange); background: var(--card); box-shadow: var(--shadow-soft); }
-.thinking-graph { overflow: visible; }
-.thinking-graph svg { width: auto; max-width: 100%; max-height: min(41dvh, 29rem); margin-inline: auto; }
+.thinking-path-detail { animation: thinking-detail-in 560ms cubic-bezier(.22,.8,.3,1) both; }
+.thinking-graph { min-height: 100%; overflow: hidden; }
+.thinking-graph svg { display: block; width: 100%; max-width: 100%; height: auto; margin-inline: auto; }
 .mind-route-layer { transform-origin: center; animation: mind-route-in 720ms cubic-bezier(.22,.8,.3,1) both; }
 .mind-route-layer path { animation: mind-path-in 760ms ease both; }
 .mind-route-caption { animation: caption-in 520ms ease both; }
@@ -220,6 +221,7 @@
 @keyframes mind-route-in { from { opacity: 0; transform: scale(0.9) rotate(-2deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
 @keyframes mind-path-in { from { stroke-dashoffset: 90; opacity: 0; } to { stroke-dashoffset: 0; opacity: 1; } }
 @keyframes caption-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes thinking-detail-in { from { opacity: 0; transform: translateY(0.65rem); } to { opacity: 1; transform: translateY(0); } }
 @keyframes experience-in { from { opacity: 0; transform: translate3d(1.4rem, 0, 0) scale(0.985); } to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
 @keyframes technology-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes service-in { from { opacity: 0; transform: translate3d(1.25rem, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
@@ -258,19 +260,21 @@
   .engine-summary-label { max-width: 100%; overflow-wrap: anywhere; font-size: clamp(0.52rem, 2.3vw, 0.68rem); line-height: 1.45; letter-spacing: 0.1em; }
   .engine-summary-value { overflow-wrap: anywhere; font-size: clamp(0.62rem, 2.5vw, 0.74rem); }
 
-  .scroll-story-thinking .story-copy,
   .scroll-story-transformation .story-copy { max-width: 40rem; }
-  .thinking-nav { display: flex; gap: 0.65rem; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 0.15rem 9vw 0.45rem; scrollbar-width: none; }
+  .flow-section-thinking { padding-top: max(6rem, calc(env(safe-area-inset-top) + 5.25rem)); padding-bottom: 4.5rem; }
+  .flow-section-thinking .story-title { font-size: clamp(1.85rem, 7.2vw, 2.4rem); }
+  .thinking-layout { gap: 1rem; }
+  .thinking-nav { display: flex; gap: 0.65rem; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 0.15rem 10vw 0.45rem; scrollbar-width: none; }
   .thinking-nav::-webkit-scrollbar { display: none; }
   .thinking-nav > li { flex: 0 0 auto; scroll-snap-align: center; }
-  .thinking-card { width: min(82vw, 24rem); min-width: min(82vw, 24rem); max-width: min(82vw, 24rem); padding: 0.7rem 0.9rem; }
+  .thinking-card { width: min(76vw, 19rem); min-width: min(76vw, 19rem); max-width: min(76vw, 19rem); min-height: 3.25rem; padding: 0.7rem 0.9rem; }
   .thinking-card.is-active { transform: none; }
-  .thinking-card:not(.is-active) > span:nth-child(n+2) { display: none; }
-  .thinking-card-tags { display: none; }
-  .thinking-card-note { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-  .thinking-graph svg { display: block; width: auto; max-width: 100%; max-height: min(22dvh, 11.5rem); }
-  .thinking-graph ul { display: none; }
-  .mind-route-caption { overflow-wrap: anywhere; font-size: 0.62rem; line-height: 1.45; letter-spacing: 0.1em; }
+  .thinking-path-detail { margin-top: 0.65rem; padding: 1rem; }
+  .thinking-path-detail h3 { font-size: 1.3rem; }
+  .thinking-path-detail .tech-pill { font-size: 0.65rem; }
+  .thinking-graph { min-height: 0; padding: 0.5rem; }
+  .thinking-graph svg { width: 100%; max-height: none; }
+  .mind-route-caption { padding-inline: 0.5rem; overflow-wrap: anywhere; font-size: 0.6rem; line-height: 1.4; letter-spacing: 0.08em; }
 
   .transformation-canvas svg { max-height: min(25dvh, 13.5rem); }
   .method-step:not(.is-active) { display: none; }
@@ -295,9 +299,11 @@
   .service-detail svg { max-height: none; }
   .story-tail { display: flex; }
 
-  .flow-section-impact .impact-grid { display: grid; grid-template-columns: minmax(0, 1fr); }
-  .flow-section-impact .impact-grid > li { display: block; }
-  .flow-section-impact .impact-card { height: auto; min-height: 0; max-height: none; overflow: visible; opacity: 1; }
+  .flow-section-impact .impact-grid { display: flex; gap: 0.7rem; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 0.65rem 9vw 1.25rem; scrollbar-width: none; }
+  .flow-section-impact .impact-grid::-webkit-scrollbar { display: none; }
+  .flow-section-impact .impact-grid > li { display: block; flex: 0 0 min(82vw, 22rem); scroll-snap-align: center; }
+  .flow-section-impact .impact-card { height: 100%; min-height: 13rem; max-height: none; overflow: visible; opacity: 0.58; }
+  .flow-section-impact .impact-card.is-active { transform: none; opacity: 1; }
   .impact-facts { flex-wrap: wrap; overflow: visible; }
 }
 
@@ -305,7 +311,7 @@
   .scroll-story-stage { padding-top: max(4.35rem, calc(env(safe-area-inset-top) + 3.85rem)); padding-bottom: max(2.8rem, calc(env(safe-area-inset-bottom) + 2.35rem)); }
   .story-title { font-size: 1.75rem; }
   .story-copy { font-size: 0.86rem; }
-  .thinking-graph svg, .transformation-canvas svg { max-height: 21dvh; }
+  .transformation-canvas svg { max-height: 21dvh; }
   .thinking-card { padding-block: 0.55rem; }
 }
 
@@ -320,7 +326,6 @@
   .thinking-card { padding: 0.7rem 1rem; }
   .thinking-card > span:nth-child(2) { margin-top: 0.35rem; font-size: 0.8rem; line-height: 1.4; }
   .thinking-card > span:nth-child(3) { margin-top: 0.45rem; }
-  .thinking-graph svg { max-height: min(36dvh, 21rem); }
   .transformation-canvas svg { max-height: min(33dvh, 19rem); }
   .method-step { padding-block: 0.55rem; }
   .method-step p:last-child { margin-top: 0.25rem; font-size: 0.8rem; line-height: 1.35; }
@@ -331,7 +336,6 @@
   .scroll-story-stage { padding-top: 4.25rem; padding-bottom: 2.75rem; }
   .story-title { font-size: 2.35rem; }
   .story-copy { font-size: 0.9rem; }
-  .thinking-graph svg { max-height: 31dvh; }
   .transformation-canvas svg { max-height: 29dvh; }
 }
 

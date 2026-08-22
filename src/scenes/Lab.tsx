@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { useAutoRotatingSelection } from "@/hooks/useAutoRotatingSelection";
 import { useCenteredSelection } from "@/hooks/useCenteredSelection";
 import { useLanguage } from "@/hooks/useLanguage";
 
@@ -19,13 +18,13 @@ function ServiceVisual({ id, accent }: { id: string; accent: string }) {
 
 export function Lab() {
   const { t } = useLanguage();
-  const [selected, select] = useState(0);
+  const { selected, select, sectionRef } = useAutoRotatingSelection<HTMLElement>(t.lab.items.length);
   const navRef = useCenteredSelection<HTMLOListElement>(selected);
   const item = t.lab.items[selected]!;
   const accent = ACCENTS[selected % ACCENTS.length] as string;
 
   return (
-    <section id="lab" className="flow-section flow-section-services">
+    <section id="lab" ref={sectionRef} className="flow-section flow-section-services">
         <div className="flow-content mx-auto w-full max-w-6xl px-4">
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.lab.kicker}</p>

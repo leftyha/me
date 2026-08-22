@@ -1,17 +1,16 @@
-import { useState } from "react";
-
+import { useAutoRotatingSelection } from "@/hooks/useAutoRotatingSelection";
 import { useCenteredSelection } from "@/hooks/useCenteredSelection";
 import { useLanguage } from "@/hooks/useLanguage";
 
 export function ExperienceRoute() {
   const { t } = useLanguage();
   const jobs = t.experience.jobs;
-  const [selected, select] = useState(0);
+  const { selected, select, sectionRef } = useAutoRotatingSelection<HTMLElement>(jobs.length);
   const navRef = useCenteredSelection<HTMLOListElement>(selected);
   const current = jobs[selected]!;
 
   return (
-    <section id="experience" className="flow-section flow-section-experience">
+    <section id="experience" ref={sectionRef} className="flow-section flow-section-experience">
         <div className="flow-content mx-auto w-full max-w-6xl px-4">
           <header className="story-header max-w-3xl">
             <p className="kicker">{t.experience.kicker}</p>

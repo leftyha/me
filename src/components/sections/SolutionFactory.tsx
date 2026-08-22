@@ -10,7 +10,7 @@ export default function SolutionFactory() {
     animate(refs.current, {
       translateX: [-12, 12],
       duration: 1800,
-      delay: (_, i = 0) => i * 120,
+      delay: (_element: unknown, i: number = 0) => i * 120,
       loop: true,
       alternate: true,
       ease: 'inOutSine',

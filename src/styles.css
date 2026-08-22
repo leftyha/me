@@ -139,7 +139,7 @@
 .hero-scroll-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
 .hero-parallax-glow { position: absolute; right: -12rem; top: 18%; width: min(42rem, 78vw); aspect-ratio: 1; border-radius: 999px; background: radial-gradient(circle, color-mix(in oklab, var(--orange) 14%, transparent), transparent 68%); filter: blur(14px); will-change: transform; }
 
-.scroll-story { position: relative; height: 320svh; border-bottom: 1px solid var(--line); }
+.scroll-story { position: relative; height: 320svh; scroll-margin-top: 4.5rem; border-bottom: 1px solid var(--line); }
 .scroll-story:nth-of-type(odd) { background: color-mix(in oklab, var(--surface-secondary) 42%, var(--surface)); }
 .scroll-story-thinking { height: 300svh; }
 .scroll-story-transformation { height: 360svh; background-image: var(--gradient-daylight); }
@@ -147,22 +147,31 @@
 .scroll-story-technology { height: 430svh; background-image: var(--gradient-daylight); }
 .scroll-story-services { height: 420svh; }
 .scroll-story-impact { height: 360svh; background-image: var(--gradient-daylight); }
-.scroll-story-stage { position: sticky; top: 0; display: flex; height: 100svh; align-items: center; overflow: hidden; padding-block: 5.6rem 2.4rem; }
-.story-content { position: relative; }
-.story-meter { position: absolute; right: 1rem; bottom: -1.15rem; left: 1rem; height: 3px; overflow: hidden; border-radius: 999px; background: var(--line); }
+.scroll-story-stage { position: sticky; top: 0; isolation: isolate; display: flex; height: 100svh; height: 100dvh; align-items: center; overflow: clip; padding-block: clamp(5rem, 8dvh, 6rem) clamp(3.25rem, 5.5dvh, 4.25rem); }
+.scroll-story-stage::before,
+.scroll-story-stage::after { position: absolute; z-index: 0; right: 0; left: 0; height: clamp(2.5rem, 7dvh, 5rem); content: ""; pointer-events: none; }
+.scroll-story-stage::before { top: 0; background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 86%, transparent), transparent); }
+.scroll-story-stage::after { bottom: 0; background: linear-gradient(0deg, color-mix(in oklab, var(--surface) 88%, transparent), transparent); }
+.story-content { position: relative; z-index: 1; max-height: 100%; min-height: 0; padding-inline: clamp(1.25rem, 3vw, 3rem); }
+.story-header, .story-body { min-height: 0; }
+.story-meter { position: absolute; z-index: 2; right: clamp(1.25rem, 3vw, 3rem); bottom: max(1.25rem, env(safe-area-inset-bottom)); left: clamp(1.25rem, 3vw, 3rem); height: 3px; overflow: hidden; border-radius: 999px; background: var(--line); }
 .story-meter span { display: block; height: 100%; border-radius: inherit; background: var(--gradient-ink); transition: width 80ms linear; }
+.story-scroll-panel { scrollbar-color: var(--line-strong) transparent; scrollbar-width: thin; }
+.story-scroll-panel::-webkit-scrollbar { width: 5px; }
+.story-scroll-panel::-webkit-scrollbar-track { background: transparent; }
+.story-scroll-panel::-webkit-scrollbar-thumb { border-radius: 999px; background: var(--line-strong); }
 
 .thinking-card { border-color: var(--line); background: color-mix(in oklab, var(--secondary) 72%, transparent); color: var(--ink); transition: transform 450ms ease, border-color 450ms ease, background 450ms ease, opacity 450ms ease; }
 .thinking-card:hover { border-color: var(--line-strong); }
 .thinking-card.is-active { transform: translateX(0.45rem); border-color: var(--orange); background: var(--card); box-shadow: var(--shadow-soft); }
-.thinking-graph { max-height: min(54svh, 37rem); overflow: hidden; }
-.thinking-graph svg { max-height: min(49svh, 33rem); }
+.thinking-graph { overflow: visible; }
+.thinking-graph svg { max-height: min(41dvh, 29rem); margin-inline: auto; }
 .mind-route-layer { transform-origin: center; animation: mind-route-in 720ms cubic-bezier(.22,.8,.3,1) both; }
 .mind-route-layer path { animation: mind-path-in 760ms ease both; }
 .mind-route-caption { animation: caption-in 520ms ease both; }
 
-.transformation-canvas { max-height: min(53svh, 35rem); overflow: hidden; }
-.transformation-canvas svg { max-height: min(45svh, 30rem); }
+.transformation-canvas { overflow: visible; }
+.transformation-canvas svg { max-height: min(38dvh, 26rem); margin-inline: auto; }
 .method-step { border-color: var(--line); background: color-mix(in oklab, var(--secondary) 70%, transparent); opacity: 0.42; transition: opacity 450ms ease, transform 450ms ease, border-color 450ms ease, background 450ms ease; }
 .method-step.is-done { opacity: 0.72; }
 .method-step.is-active { transform: translateX(-0.45rem); border-color: var(--orange); background: var(--card); opacity: 1; box-shadow: var(--shadow-soft); }
@@ -170,13 +179,13 @@
 .experience-nav { display: grid; gap: 0.45rem; align-content: start; }
 .experience-nav-button { display: grid; width: 100%; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 0.8rem; border-left: 2px solid var(--line); padding: 0.65rem 0.85rem; text-align: left; color: var(--muted); transition: border-color 400ms ease, background 400ms ease, color 400ms ease, transform 400ms ease; }
 .experience-nav-button.is-active { transform: translateX(0.4rem); border-color: var(--orange); background: var(--card); color: var(--ink); }
-.experience-detail { min-height: min(47svh, 31rem); overflow: hidden; animation: experience-in 620ms cubic-bezier(.22,.8,.3,1) both; }
+.experience-detail { height: min(50dvh, 31rem); min-height: 0; overflow-y: auto; animation: experience-in 620ms cubic-bezier(.22,.8,.3,1) both; }
 
 .tech-tabs { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.35rem; scrollbar-width: none; }
 .tech-tabs::-webkit-scrollbar { display: none; }
 .tech-tab { min-height: 2.7rem; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 999px; background: var(--secondary); padding-inline: 1rem; color: var(--muted); font-size: 0.86rem; transition: border-color 350ms ease, color 350ms ease, background 350ms ease, transform 350ms ease; }
 .tech-tab.is-active { transform: translateY(-2px); background: var(--card); font-weight: 700; }
-.technology-canvas { max-height: min(50svh, 34rem); }
+.technology-canvas { height: min(44dvh, 29rem); min-height: 0; max-height: none; overflow-y: auto; }
 .tool-button { min-height: 2.8rem; border: 1px solid var(--line); border-radius: 0.8rem; background: color-mix(in oklab, var(--card) 72%, transparent); padding: 0.55rem 1rem; color: var(--ink); transition: transform 300ms ease, background 300ms ease, border-color 300ms ease; }
 .tool-button.is-active { transform: translateY(-3px); background: var(--card); box-shadow: var(--shadow-soft); }
 .technology-detail { animation: technology-in 520ms ease both; }
@@ -184,10 +193,12 @@
 .service-nav { display: grid; gap: 0.45rem; align-content: start; }
 .service-nav-button { display: grid; width: 100%; grid-template-columns: auto minmax(0, 1fr); gap: 0.8rem; border: 1px solid transparent; border-radius: 0.8rem; padding: 0.72rem 0.85rem; text-align: left; color: var(--muted); transition: border-color 350ms ease, background 350ms ease, color 350ms ease, transform 350ms ease; }
 .service-nav-button.is-active { transform: translateX(0.4rem); border-color: var(--orange); background: var(--card); color: var(--ink); }
-.service-detail { min-height: min(48svh, 31rem); animation: service-in 620ms cubic-bezier(.22,.8,.3,1) both; }
+.service-detail { height: min(50dvh, 31rem); min-height: 0; overflow-y: auto; animation: service-in 620ms cubic-bezier(.22,.8,.3,1) both; }
 
 .impact-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
-.impact-card { display: block; width: 100%; min-height: 13.5rem; padding: 1.25rem; text-align: left; opacity: 0.55; transition: transform 420ms ease, opacity 420ms ease, border-color 420ms ease, box-shadow 420ms ease; }
+.impact-card { display: block; width: 100%; height: 13.25rem; min-height: 0; overflow-y: auto; padding: 1rem; text-align: left; opacity: 0.55; scrollbar-color: var(--line-strong) transparent; scrollbar-width: thin; transition: transform 420ms ease, opacity 420ms ease, border-color 420ms ease, box-shadow 420ms ease; }
+.impact-card .impact-arrow { margin-block: 0.75rem; }
+.impact-card span:last-child { margin-top: 0.55rem; font-size: 0.82rem; line-height: 1.4; }
 .impact-card:hover { opacity: 0.82; }
 .impact-card.is-active { transform: translateY(-0.45rem); opacity: 1; animation: impact-in 540ms ease both; }
 .impact-card.is-active .impact-arrow { animation: impact-arrow 650ms ease both; }
@@ -214,10 +225,13 @@
 .lm-drift { animation: lm-drift 7s ease-in-out infinite; }
 
 @media (max-width: 63.99rem) {
-  .scroll-story-stage { align-items: flex-start; padding-top: 5.4rem; padding-bottom: 1rem; }
+  .scroll-story-stage { align-items: flex-start; padding-top: max(4.85rem, calc(env(safe-area-inset-top) + 4.15rem)); padding-bottom: max(3.15rem, calc(env(safe-area-inset-bottom) + 2.6rem)); }
+  .story-content { height: 100%; }
+  .story-body { margin-top: 1rem; }
   .story-title { font-size: clamp(2rem, 8vw, 3rem); }
   .story-copy { font-size: 0.95rem; line-height: 1.5; }
-  .story-meter { bottom: -0.7rem; }
+  .story-header .story-title { margin-top: 0.55rem; }
+  .story-header .story-copy { margin-top: 0.65rem; }
 
   .hero-scroll-stage { padding-top: 4.75rem; }
   .hero-stage-content { height: 100%; align-content: center; gap: 0.35rem; padding-bottom: 0.75rem; }
@@ -235,45 +249,90 @@
 
   .scroll-story-thinking .story-copy,
   .scroll-story-transformation .story-copy { max-width: 40rem; }
-  .thinking-card { padding: 0.7rem 0.9rem; }
+  .thinking-nav { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.15rem 0.2rem 0.45rem; scrollbar-width: none; }
+  .thinking-nav::-webkit-scrollbar { display: none; }
+  .thinking-nav > li { flex: 0 0 auto; }
+  .thinking-card { width: auto; min-width: 10rem; max-width: min(82vw, 24rem); padding: 0.7rem 0.9rem; }
   .thinking-card:not(.is-active) > span:nth-child(n+2) { display: none; }
-  .thinking-graph { max-height: 36svh; }
-  .thinking-graph svg { max-height: 33svh; }
+  .thinking-graph svg { max-height: min(25dvh, 13.5rem); }
   .thinking-graph ul { display: none; }
 
-  .transformation-canvas { max-height: 36svh; }
-  .transformation-canvas svg { max-height: 31svh; }
+  .transformation-canvas svg { max-height: min(25dvh, 13.5rem); }
   .method-step:not(.is-active) { display: none; }
 
+  .scroll-story-experience .story-content,
+  .scroll-story-technology .story-content,
+  .scroll-story-services .story-content { display: flex; flex-direction: column; }
+  .scroll-story-experience .story-body,
+  .scroll-story-services .story-body { display: grid; flex: 1 1 auto; grid-template-rows: auto minmax(0, 1fr); }
   .experience-nav, .service-nav { display: flex; gap: 0.45rem; overflow-x: auto; padding-bottom: 0.3rem; scrollbar-width: none; }
   .experience-nav::-webkit-scrollbar, .service-nav::-webkit-scrollbar { display: none; }
   .experience-nav li, .service-nav li { flex: 0 0 auto; }
   .experience-nav-button, .service-nav-button { width: auto; min-height: 3.2rem; transform: none !important; border: 1px solid var(--line); border-radius: 0.75rem; white-space: nowrap; }
   .experience-nav-button span:last-child span, .experience-nav-button span:last-child strong { max-width: 13rem; }
-  .experience-detail { min-height: 0; max-height: 54svh; overflow-y: auto; }
+  .experience-detail { height: 100%; min-height: 0; max-height: none; overflow-y: auto; }
 
   .technology-detail { display: none; }
-  .technology-canvas { min-height: 0; max-height: 49svh; }
-  .technology-canvas svg { max-height: 19svh; }
+  .scroll-story-technology .story-body { flex: 1 1 auto; }
+  .technology-canvas { height: 100%; min-height: 0; max-height: none; }
+  .technology-canvas svg { max-height: min(18dvh, 9.5rem); }
 
-  .service-detail { min-height: 0; max-height: 55svh; overflow-y: auto; }
-  .service-detail svg { max-height: 22svh; }
+  .service-detail { height: 100%; min-height: 0; max-height: none; overflow-y: auto; }
+  .service-detail svg { max-height: min(21dvh, 11rem); }
+  .story-tail { display: none; }
 
   .impact-grid { display: block; }
   .impact-grid > li { display: none; }
   .impact-grid > li:has(.impact-card.is-active) { display: block; }
-  .impact-card { min-height: 14rem; opacity: 1; }
+  .impact-card { height: auto; min-height: 0; max-height: 37dvh; overflow-y: auto; opacity: 1; }
+  .impact-facts { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.35rem; scrollbar-width: none; }
+  .impact-facts::-webkit-scrollbar { display: none; }
+  .impact-facts > li { flex: 0 0 auto; }
 }
 
 @media (max-height: 43rem) and (max-width: 63.99rem) {
-  .scroll-story-stage { padding-top: 4.5rem; }
-  .story-title { font-size: 1.8rem; }
+  .scroll-story-stage { padding-top: max(4.35rem, calc(env(safe-area-inset-top) + 3.85rem)); padding-bottom: max(2.8rem, calc(env(safe-area-inset-bottom) + 2.35rem)); }
+  .story-title { font-size: 1.75rem; }
   .story-copy { font-size: 0.86rem; }
   .hero-scroll-stage { padding-top: 4rem; }
   .hero-engine figure > svg { max-height: 27svh; }
-  .thinking-graph { max-height: 30svh; }
-  .thinking-graph svg { max-height: 28svh; }
-  .experience-detail, .service-detail { max-height: 49svh; }
+  .thinking-graph svg, .transformation-canvas svg { max-height: 21dvh; }
+  .thinking-card { padding-block: 0.55rem; }
+  .impact-card { max-height: 33dvh; }
+}
+
+@media (min-width: 64rem) and (max-height: 56.25rem) {
+  .scroll-story-stage { align-items: flex-start; padding-top: 4.65rem; padding-bottom: 3.1rem; }
+  .story-title { font-size: clamp(2.35rem, 3.4vw, 3.35rem); }
+  .story-copy { font-size: 1rem; line-height: 1.45; }
+  .story-header .story-title { margin-top: 0.6rem; }
+  .story-header .story-copy { margin-top: 0.7rem; }
+  .story-body { margin-top: 1rem; }
+  .story-tail { margin-top: 0.65rem; }
+  .thinking-card { padding: 0.7rem 1rem; }
+  .thinking-card > span:nth-child(2) { margin-top: 0.35rem; font-size: 0.8rem; line-height: 1.4; }
+  .thinking-card > span:nth-child(3) { margin-top: 0.45rem; }
+  .thinking-graph svg { max-height: min(36dvh, 21rem); }
+  .transformation-canvas svg { max-height: min(33dvh, 19rem); }
+  .method-step { padding-block: 0.55rem; }
+  .method-step p:last-child { margin-top: 0.25rem; font-size: 0.8rem; line-height: 1.35; }
+  .experience-nav-button, .service-nav-button { padding-block: 0.48rem; }
+  .experience-detail, .service-detail { height: min(48dvh, 27rem); }
+  .technology-canvas { height: min(42dvh, 24rem); }
+  .impact-card { height: 10.75rem; padding: 1rem; }
+  .impact-card .impact-arrow { margin-block: 0.65rem; }
+  .impact-card span:last-child { margin-top: 0.45rem; font-size: 0.78rem; line-height: 1.35; }
+}
+
+@media (min-width: 64rem) and (max-height: 45rem) {
+  .scroll-story-stage { padding-top: 4.25rem; padding-bottom: 2.75rem; }
+  .story-title { font-size: 2.35rem; }
+  .story-copy { font-size: 0.9rem; }
+  .thinking-graph svg { max-height: 31dvh; }
+  .transformation-canvas svg { max-height: 29dvh; }
+  .experience-detail, .service-detail { height: 43dvh; }
+  .technology-canvas { height: 41dvh; }
+  .impact-card { height: 9.25rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

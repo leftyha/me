@@ -19,7 +19,7 @@ const CENTER = { x: 300, y: 262 };
 export function Thinking() {
   const { t } = useLanguage();
   const reduced = useReducedMotion();
-  const { ref, progress } = usePinnedScrollProgress<HTMLElement>();
+  const { ref, progress } = usePinnedScrollProgress<HTMLElement>({ startHold: 0.06, endHold: 0.1 });
   const { index: pathIndex, select } = useScrollSteps(progress, t.thinking.paths.length);
   const path = t.thinking.paths[pathIndex]!;
   const activeIds = new Set(path.nodes);
@@ -28,15 +28,15 @@ export function Thinking() {
     <section id="thinking" ref={ref} className="scroll-story scroll-story-thinking">
       <div className="scroll-story-stage">
         <div className="story-content mx-auto w-full max-w-6xl px-4">
-          <header className="max-w-3xl">
+          <header className="story-header max-w-3xl">
             <p className="kicker">{t.thinking.kicker}</p>
             <h2 className="story-title mt-3">{t.thinking.title}</h2>
             <p className="story-copy mt-4">{t.thinking.copy}</p>
           </header>
 
-          <div className="mt-7 grid items-center gap-6 lg:grid-cols-[0.82fr_1.18fr]">
+          <div className="story-body mt-7 grid items-center gap-6 lg:grid-cols-[0.82fr_1.18fr]">
             <div>
-              <ul className="grid gap-2" aria-label={t.thinking.hint}>
+              <ul className="thinking-nav grid gap-2" aria-label={t.thinking.hint}>
                 {t.thinking.paths.map((item, index) => {
                   const isActive = index === pathIndex;
                   return (
@@ -90,8 +90,8 @@ export function Thinking() {
               <p key={path.id} className="mind-route-caption px-3 pb-2 pt-1 text-center font-mono text-xs uppercase tracking-[0.16em] text-gold">{t.thinking.core} — {path.name}</p>
             </div>
           </div>
-          <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
         </div>
+        <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
       </div>
     </section>
   );

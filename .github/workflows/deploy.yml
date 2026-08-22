@@ -11,9 +11,15 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -22,12 +28,18 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 22
+          cache: npm
 
-      - name: Install
+      - name: Install dependencies
         run: npm install
 
       - name: Build
         run: npm run build
+
+      - name: Verify build output
+        run: |
+          test -d dist
+          ls -la dist
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -37,6 +49,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

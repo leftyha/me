@@ -259,7 +259,6 @@
   .thinking-card:not(.is-active) > span:nth-child(n+2) { display: none; }
   .thinking-card-tags { display: none; }
   .thinking-card-note { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-  .thinking-hint { margin-top: 0.65rem; font-size: 0.78rem; }
   .thinking-graph svg { display: block; width: auto; max-width: 100%; max-height: min(22dvh, 11.5rem); }
   .thinking-graph ul { display: none; }
   .mind-route-caption { overflow-wrap: anywhere; font-size: 0.62rem; line-height: 1.45; letter-spacing: 0.1em; }

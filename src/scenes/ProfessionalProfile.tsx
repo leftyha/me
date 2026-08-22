@@ -21,8 +21,7 @@ export function ProfessionalProfile() {
 
         <div className="panel p-7 sm:p-9">
           <h2 className="story-title max-w-3xl">{t.profileSection.title}</h2>
-          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-ink-soft">{t.profileSection.copy}</p>
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+          <ul className="mt-7 grid gap-3 sm:grid-cols-2">
             {t.profileSection.highlights.map((item, index) => (
               <li key={item} className="flex items-start gap-3 rounded-2xl border border-line bg-secondary/70 p-4">
                 <span className="mt-0.5 font-mono text-xs text-orange">{String(index + 1).padStart(2, "0")}</span>

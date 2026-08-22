@@ -76,7 +76,7 @@ export function Arrival() {
               <a href="#contact" className="inline-flex min-h-12 items-center rounded-full border border-line bg-card px-6 text-sm font-semibold text-ink transition-colors hover:bg-secondary">{t.arrival.ctaSecondary}</a>
             </div>
             <div className="hero-progress mt-8 flex items-center gap-3">
-              <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink-soft/80">{t.arrival.scrollHint}</p>
+              <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink-soft/80">{t.arrival.engineProgressLabel}</p>
               <span className="font-mono text-[0.65rem] tabular-nums text-ink-soft">{String(percentage).padStart(3, "0")}%</span>
             </div>
           </div>

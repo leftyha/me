@@ -20,7 +20,7 @@ export function ExperienceRoute() {
           </header>
 
           <div className="story-body mt-7 grid gap-5 lg:grid-cols-[0.43fr_1.57fr]">
-            <ol ref={navRef} className="experience-nav" aria-label={t.experience.hint}>
+            <ol ref={navRef} className="experience-nav" aria-label={t.experience.jobsLabel}>
               {jobs.map((job, index) => {
                 const isActive = index === selected;
                 return (
@@ -57,7 +57,6 @@ export function ExperienceRoute() {
               </div>
             </article>
           </div>
-          <p className="flow-hint mt-4 text-sm text-ink-soft">{t.experience.hint}</p>
         </div>
     </section>
   );

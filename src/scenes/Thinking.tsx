@@ -38,7 +38,7 @@ export function Thinking() {
 
           <div className="story-body mt-7 grid items-center gap-6 lg:grid-cols-[0.82fr_1.18fr]">
             <div>
-              <ul ref={carouselRef} className="thinking-nav grid gap-2" aria-label={t.thinking.hint}>
+              <ul ref={carouselRef} className="thinking-nav grid gap-2" aria-label={t.thinking.pathsLabel}>
                 {t.thinking.paths.map((item, index) => {
                   const isActive = index === pathIndex;
                   return (
@@ -57,7 +57,6 @@ export function Thinking() {
                   );
                 })}
               </ul>
-              <p className="thinking-hint mt-4 text-sm text-ink-soft">{t.thinking.hint}</p>
             </div>
 
             <div className="thinking-graph panel relative p-3 sm:p-5">

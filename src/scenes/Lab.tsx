@@ -1,17 +1,59 @@
 import { useLanguage } from "@/hooks/useLanguage";
-const ACCENTS = ["var(--purple)", "var(--cyan)", "var(--teal)", "var(--orange)", "var(--coral)", "var(--blue)"];
-function LabVisual({ id, accent }: { id: string; accent: string }) {
-  const common = { fill: "none", stroke: accent, strokeWidth: 1.6 } as const;
-  switch (id) {
-    case "customer-intelligence": return <svg viewBox="0 0 200 90" className="h-[90px] w-full" aria-hidden="true">{[0,1,2,3,4,5,6,7].map((i)=><circle key={i} cx={12+i*9} cy={20+((i*17)%50)} r={3} fill={accent} opacity={0.5}/>)}<path d="M92 60 C 110 60, 112 30, 130 30" {...common} className="lm-flow"/><rect x={140} y={18} width={48} height={24} rx={6} {...common}/><circle cx={164} cy={30} r={4} fill={accent}/></svg>;
-    case "digital-experiences": return <svg viewBox="0 0 200 90" className="h-[90px] w-full" aria-hidden="true"><path d="M20 70 L60 40 L100 70 Z" {...common}/><rect x={110} y={26} width={30} height={44} rx={5} {...common}/><path d="M60 40 C 80 20, 120 18, 125 24" {...common} strokeDasharray="4 6" className="lm-flow"/><circle cx={155} cy={40} r={12} {...common}/><circle cx={155} cy={40} r={4} fill={accent}/></svg>;
-    case "knowledge-systems": return <svg viewBox="0 0 200 90" className="h-[90px] w-full" aria-hidden="true"><path d="M14 45 H 186" {...common} strokeOpacity={0.35}/><path d="M60 45 C 80 45, 84 20, 110 20 H 170" {...common} className="lm-flow"/><path d="M90 45 C 108 45, 112 70, 138 70 H 176" {...common} strokeOpacity={0.6}/>{[14,60,90,130,170].map((x)=><circle key={x} cx={x} cy={45} r={4} fill={accent}/>)}</svg>;
-    case "emergent-systems": return <svg viewBox="0 0 200 90" className="h-[90px] w-full" aria-hidden="true">{Array.from({length:30},(_,i)=>{const col=i%10; const row=Math.floor(i/10); const on=(i*7)%3===0; return <rect key={i} x={12+col*11} y={22+row*16} width={9} height={12} rx={2} fill={on?accent:"transparent"} fillOpacity={0.55} stroke={accent} strokeOpacity={0.3}/>;})}<path d="M128 45 h 18" {...common} className="lm-flow"/><circle cx={172} cy={45} r={16} {...common}/><circle cx={172} cy={45} r={7} fill={accent} opacity={0.7}/></svg>;
-    case "interactive-narratives": return <svg viewBox="0 0 200 90" className="h-[90px] w-full" aria-hidden="true"><circle cx={26} cy={45} r={9} {...common}/><path d="M38 45 C 66 45, 66 20, 96 20" {...common} className="lm-flow"/><path d="M38 45 C 66 45, 66 70, 96 70" {...common} strokeOpacity={0.5}/><rect x={104} y={10} width={76} height={22} rx={6} {...common}/><rect x={104} y={58} width={76} height={22} rx={6} {...common}/></svg>;
-    default: return <svg viewBox="0 0 200 90" className="h-[90px] w-full" aria-hidden="true">{[24,45,66].map((y)=><path key={y} d={`M12 ${y} h 46`} {...common} strokeOpacity={0.5}/>)}<rect x={64} y={26} width={44} height={38} rx={10} {...common}/><circle cx={86} cy={45} r={6} fill={accent} opacity={0.8}/><path d="M110 45 C 138 45, 140 26, 168 26" {...common} className="lm-flow"/><path d="M110 45 C 138 45, 140 66, 168 66" {...common} strokeOpacity={0.6}/><circle cx={174} cy={26} r={4} fill={accent}/><circle cx={174} cy={66} r={4} fill={accent}/></svg>;
-  }
+import { usePinnedScrollProgress } from "@/hooks/usePinnedScrollProgress";
+import { useScrollSteps } from "@/hooks/useScrollSteps";
+
+const ACCENTS = ["var(--orange)", "var(--teal)", "var(--gold)", "var(--cyan)", "var(--blue)", "var(--coral)"];
+
+function ServiceVisual({ id, accent }: { id: string; accent: string }) {
+  const box = (x: number, y: number, width: number, label: string) => <g><rect x={x} y={y} width={width} height={54} rx={12} fill="var(--card)" stroke={accent} strokeOpacity={0.75} strokeWidth={2} /><text x={x + width / 2} y={y + 32} textAnchor="middle" fontSize={14} className="font-mono" fill="var(--ink)">{label}</text></g>;
+  const link = (path: string) => <path d={path} fill="none" stroke={accent} strokeWidth={3} strokeDasharray="7 9" className="lm-flow" />;
+
+  if (id === "backend-apis") return <svg viewBox="0 0 480 240" className="h-auto w-full" aria-hidden="true">{box(18, 92, 104, "CLIENTS")}{link("M122 119 H190")}{box(190, 70, 112, "API")}{link("M302 96 C350 96 340 42 382 42")}{link("M302 122 C350 122 340 178 382 178")}{box(382, 15, 82, "DATA")}{box(382, 151, 82, "QUEUE")}</svg>;
+  if (id === "fullstack-products") return <svg viewBox="0 0 480 240" className="h-auto w-full" aria-hidden="true">{box(24, 28, 118, "INTERFACE")}{box(24, 158, 118, "USERS")}{link("M142 55 C210 55 188 105 240 105")}{link("M142 185 C210 185 188 132 240 132")}{box(240, 92, 104, "PRODUCT")}{link("M344 119 H390")}{box(390, 92, 74, "LIVE")}</svg>;
+  if (id === "integrations-payments") return <svg viewBox="0 0 480 240" className="h-auto w-full" aria-hidden="true">{box(20, 92, 108, "SYSTEM A")}{link("M128 119 H190")}{box(190, 92, 102, "WEBHOOK")}{link("M292 119 H352")}{box(352, 92, 108, "PAYMENT")}<circle cx={241} cy={48} r={17} fill={accent} opacity={0.85} /><text x={241} y={53} textAnchor="middle" fontSize={12} fill="var(--surface)">OK</text></svg>;
+  if (id === "automation-ai") return <svg viewBox="0 0 480 240" className="h-auto w-full" aria-hidden="true">{box(18, 92, 100, "INPUTS")}{link("M118 119 H180")}{box(180, 70, 120, "WORKFLOW")}{link("M300 96 C350 96 340 42 382 42")}{link("M300 122 C350 122 340 178 382 178")}{box(382, 15, 82, "AGENT")}{box(382, 151, 82, "ACTION")}</svg>;
+  if (id === "cloud-delivery") return <svg viewBox="0 0 480 240" className="h-auto w-full" aria-hidden="true">{box(20, 92, 92, "CODE")}{link("M112 119 H178")}{box(178, 92, 112, "DOCKER")}{link("M290 119 H352")}{box(352, 92, 108, "CLOUD")}<path d="M387 78 C390 50 432 48 438 78" fill="none" stroke={accent} strokeWidth={3} /></svg>;
+  return <svg viewBox="0 0 480 240" className="h-auto w-full" aria-hidden="true">{box(20, 92, 108, "LEGACY")}{link("M128 119 H184")}{box(184, 72, 112, "BRIDGE")}{link("M296 98 C340 98 340 52 380 52")}{link("M296 124 C340 124 340 174 380 174")}{box(380, 25, 84, "API")}{box(380, 147, 84, "UI")}</svg>;
 }
+
 export function Lab() {
   const { t } = useLanguage();
-  return <section id="lab" className="scene daylight"><div className="mx-auto max-w-6xl px-4"><header className="max-w-2xl"><p className="kicker">{t.lab.kicker}</p><h2 className="mt-3 font-display text-3xl sm:text-4xl">{t.lab.title}</h2><p className="mt-4 text-lg leading-relaxed text-ink-soft">{t.lab.copy}</p></header><ul className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{t.lab.items.map((item,index)=>{const accent=ACCENTS[index%ACCENTS.length] as string; return <li key={item.id} className="group flex flex-col gap-3 rounded-3xl p-5 panel transition-transform duration-300 hover:-translate-y-1"><div className="flex items-center justify-between gap-2"><span className="kicker" style={{color:accent}}>{t.lab.status}</span><span className="font-mono text-[0.62rem] tabular-nums text-ink-soft">{String(index+1).padStart(2,"0")}</span></div><h3 className="font-display text-lg leading-snug">{item.name}</h3><LabVisual id={item.id} accent={accent}/><p className="text-sm leading-relaxed text-ink-soft">{item.line}</p><ol className="mt-auto flex flex-wrap items-center gap-1.5 pt-1">{item.flow.map((step,stepIndex)=><li key={step} className="flex items-center gap-1.5">{stepIndex>0&&<span aria-hidden="true" className="text-ink-soft/60">→</span>}<span className="rounded-full border border-line px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-wider text-ink-soft">{step}</span></li>)}</ol></li>;})}</ul><p className="mt-6 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft">{t.lab.hint}</p></div></section>;
+  const { ref, progress } = usePinnedScrollProgress<HTMLElement>();
+  const { index: selected, select } = useScrollSteps(progress, t.lab.items.length);
+  const item = t.lab.items[selected]!;
+  const accent = ACCENTS[selected % ACCENTS.length] as string;
+
+  return (
+    <section id="lab" ref={ref} className="scroll-story scroll-story-services">
+      <div className="scroll-story-stage">
+        <div className="story-content mx-auto w-full max-w-6xl px-4">
+          <header className="max-w-3xl">
+            <p className="kicker">{t.lab.kicker}</p>
+            <h2 className="story-title mt-3">{t.lab.title}</h2>
+            <p className="story-copy mt-4">{t.lab.copy}</p>
+          </header>
+
+          <div className="mt-7 grid gap-5 lg:grid-cols-[0.54fr_1.46fr]">
+            <ol className="service-nav">
+              {t.lab.items.map((service, index) => <li key={service.id}><button type="button" onClick={() => select(index)} aria-pressed={index === selected} className={`service-nav-button ${index === selected ? "is-active" : ""}`}><span className="font-mono text-xs text-orange">{String(index + 1).padStart(2, "0")}</span><span>{service.name}</span></button></li>)}
+            </ol>
+
+            <article key={item.id} className="service-detail panel grid gap-5 p-6 sm:p-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+              <div>
+                <p className="kicker" style={{ color: accent }}>{t.lab.status}</p>
+                <h3 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">{item.name}</h3>
+                <p className="mt-5 text-base leading-relaxed text-ink-soft sm:text-lg">{item.line}</p>
+                <ol className="mt-6 grid gap-2 sm:grid-cols-2">
+                  {item.flow.map((step, index) => <li key={step} className="flex items-center gap-3 rounded-xl border border-line bg-secondary/70 px-3 py-2.5"><span className="font-mono text-xs" style={{ color: accent }}>{String(index + 1).padStart(2, "0")}</span><span className="text-sm text-ink">{step}</span></li>)}
+                </ol>
+              </div>
+              <div className="rounded-2xl border border-line bg-surface/60 p-3"><ServiceVisual id={item.id} accent={accent} /></div>
+            </article>
+          </div>
+          <p className="mt-4 text-sm text-ink-soft">{t.lab.hint}</p>
+          <div className="story-meter" aria-hidden="true"><span style={{ width: `${progress * 100}%` }} /></div>
+        </div>
+      </div>
+    </section>
+  );
 }

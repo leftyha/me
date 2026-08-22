@@ -8,6 +8,7 @@ import { ExperienceRoute } from "@/scenes/ExperienceRoute";
 import { TechUniverse } from "@/scenes/TechUniverse";
 import { Lab } from "@/scenes/Lab";
 import { WhyMe } from "@/scenes/WhyMe";
+import { ProfessionalProfile } from "@/scenes/ProfessionalProfile";
 import { Contact } from "@/scenes/Contact";
 
 export function App() {
@@ -23,6 +24,7 @@ export function App() {
         <TechUniverse />
         <Lab />
         <WhyMe />
+        <ProfessionalProfile />
         <Contact />
       </main>
     </LanguageProvider>

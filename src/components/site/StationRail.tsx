@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useLanguage } from "@/hooks/useLanguage";
 
-export const stationIds = ["arrival", "thinking", "transformation", "experience", "technology", "lab", "why", "contact"];
+export const stationIds = ["arrival", "thinking", "transformation", "experience", "technology", "lab", "why", "profile", "contact"];
 
 export function StationRail() {
   const { t } = useLanguage();
@@ -28,7 +28,6 @@ export function StationRail() {
           return (
             <li key={id}>
               <a href={`#${id}`} aria-current={isActive ? "true" : undefined} className="group flex min-h-9 items-center gap-2 rounded-full px-2">
-                <span className={`font-mono text-[0.65rem] tabular-nums transition-colors ${isActive ? "text-ink" : "text-ink-soft/60"}`}>{String(index + 1).padStart(2, "0")}</span>
                 <span aria-hidden="true" className={`h-1.5 rounded-full transition-all duration-500 ${isActive ? "w-6" : "w-1.5 bg-line"}`} style={isActive ? { background: "var(--gradient-ink)" } : undefined} />
                 <span className="sr-only">{t.stations[index]}</span>
                 <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs text-ink-soft transition-all duration-300 group-hover:max-w-[9rem] group-focus-visible:max-w-[9rem]">{t.stations[index]}</span>
